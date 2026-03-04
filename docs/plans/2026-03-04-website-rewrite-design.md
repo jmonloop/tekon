@@ -234,11 +234,13 @@ Target: non-technical user adds a new forklift in under 2 minutes.
 4. Push to main → Vercel builds and deploys
 5. DNS: point `carretillastekon.com` to Vercel
 
-## Related Documentation (pending)
-
-The following detailed docs are referenced by this design but not yet written:
+## Related Documentation
 
 - `supabase-auth-admin.md` — Auth flow, AuthGuard, RLS policies
 - `supabase-setup-schema.md` — Migrations, RPC functions, edge functions
 - `astro-react-islands.md` — Islands architecture, nanostores, hydration
 - `product-filters-system.md` — Filter sidebar, URL params, client-side filtering
+- `global-search.md` — Full-text search, RPC function, debounced UI
+- `contact-form-flow.md` — Contact form submission, email notifications
+- `admin-panel-views.md` — Admin panel views and components
+- `seo-structured-data.md` — SEO, JSON-LD, meta tags
