@@ -140,7 +140,7 @@ flowchart TD
 - `ProductGrid.tsx` -- forklift card grid with filters on listing pages
 - `FilterSidebar.tsx` -- filter controls (range sliders, checkbox groups)
 - `ContactForm.tsx` -- contact/inquiry form with validation
-- `AdminApp.tsx` -- entire admin panel (dashboard, CRUD, inquiries)
+- `AdminApp.tsx` -- single React SPA with React Router (dashboard, CRUD, inquiries)
 
 ### Page-to-island mapping
 
@@ -154,7 +154,7 @@ flowchart TD
 | `/contacto` | Address, phone, heading | `SearchBar`, `ContactForm`, Google Map |
 | `/nuestras-soluciones` | All content, FAQ | `SearchBar` |
 | `/sobre-nosotros` | All content | `SearchBar` |
-| `/admin/*` | None | `AdminApp` (full React) |
+| `/admin/*` | None | `AdminApp` (single React SPA with React Router, `client:only="react"`) |
 
 ## Sharing State Between Islands
 
@@ -251,14 +251,8 @@ src/
     politica-de-cookies.astro
     aviso-legal.astro
     admin/
-      index.astro                 -- Wraps AdminApp React component
-      login.astro
-      carretillas/
-        index.astro
-        nueva.astro
-        [id].astro
-      categorias.astro
-      consultas.astro
+      login.astro                 -- Separate login page
+      [...path].astro             -- Catch-all, mounts AdminApp SPA
   layouts/
     Layout.astro                  -- Public site layout (head, header, footer)
     AdminLayout.astro             -- Admin layout (sidebar, auth guard)
@@ -275,7 +269,7 @@ src/
     FilterSidebar.tsx             -- React island
     ContactForm.tsx               -- React island
     admin/
-      AdminApp.tsx                -- React admin application
+      AdminApp.tsx                -- Single React SPA with React Router
       ForkliftForm.tsx
       InquiriesTable.tsx
       CategoryList.tsx
@@ -298,7 +292,9 @@ src/
 | `.tsx` component | Client-side (browser) | Interactive UI: forms, search, filters, anything with state |
 | `.ts` store | Client-side (browser) | Shared state between React islands |
 
-### Pattern: Astro page embedding a React island
+### Pattern: Astro page embedding a React island (hybrid data loading)
+
+Build-time data is passed as props for SEO (product cards in initial HTML). The React island re-fetches fresh data on mount to ensure freshness, then uses client-side filtering.
 
 ```astro
 ---
@@ -307,7 +303,7 @@ import Layout from '../layouts/Layout.astro';
 import ProductGrid from '../components/ProductGrid';
 import FilterSidebar from '../components/FilterSidebar';
 
-// Data fetched at build time
+// Data fetched at build time — included in static HTML for SEO
 const { data: forklifts } = await supabase
   .from('forklifts')
   .select('*, categories(*), forklift_specs(*)')
@@ -321,6 +317,7 @@ const { data: forklifts } = await supabase
     <p>Encuentra la carretilla elevadora que necesitas...</p>
 
     <div class="flex gap-8">
+      <!-- Build-time data as props for initial render; islands re-fetch on mount for freshness -->
       <FilterSidebar client:idle forklifts={forklifts} />
       <ProductGrid client:idle forklifts={forklifts} />
     </div>

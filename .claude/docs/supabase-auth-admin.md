@@ -444,27 +444,41 @@ export function AuthGuard({ children }: AuthGuardProps) {
 
 ### Usage in admin pages
 
-Every admin page component follows this pattern:
+The admin is a single React SPA (`AdminApp.tsx`) with React Router. A single `AuthProvider` wraps the entire app, and `AuthGuard` protects all routes. Login is a separate Astro page outside the SPA.
 
 ```tsx
-// src/components/admin/AdminDashboard.tsx
+// src/components/admin/AdminApp.tsx
+import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import { AuthProvider } from './AuthProvider'
 import { AuthGuard } from './AuthGuard'
 import { AdminSidebar } from './AdminSidebar'
+import { Dashboard } from './Dashboard'
+import { ForkliftList } from './ForkliftList'
+import { ForkliftForm } from './ForkliftForm'
+import { CategoryList } from './CategoryList'
+import { InquiriesTable } from './InquiriesTable'
 
-export function AdminDashboard() {
+export function AdminApp() {
   return (
-    <AuthProvider>
-      <AuthGuard>
-        <div className="flex">
-          <AdminSidebar />
-          <main className="flex-1 p-6">
-            <h1 className="text-2xl font-bold">Dashboard</h1>
-            {/* Dashboard content */}
-          </main>
-        </div>
-      </AuthGuard>
-    </AuthProvider>
+    <BrowserRouter basename="/admin">
+      <AuthProvider>
+        <AuthGuard>
+          <div className="flex">
+            <AdminSidebar />
+            <main className="flex-1 p-6">
+              <Routes>
+                <Route index element={<Dashboard />} />
+                <Route path="carretillas" element={<ForkliftList />} />
+                <Route path="carretillas/nueva" element={<ForkliftForm />} />
+                <Route path="carretillas/:id" element={<ForkliftForm />} />
+                <Route path="categorias" element={<CategoryList />} />
+                <Route path="consultas" element={<InquiriesTable />} />
+              </Routes>
+            </main>
+          </div>
+        </AuthGuard>
+      </AuthProvider>
+    </BrowserRouter>
   )
 }
 ```
@@ -472,15 +486,31 @@ export function AdminDashboard() {
 ### Component hierarchy
 
 ```
-AuthProvider          -- provides session context
-  AuthGuard           -- redirects if unauthenticated
-    AdminSidebar      -- navigation with sign out button
-    Page Content      -- uses supabase client for data
+BrowserRouter         -- client-side routing (basename="/admin")
+  AuthProvider        -- single shared session context
+    AuthGuard         -- redirects if unauthenticated
+      AdminSidebar    -- navigation with sign out button
+      Routes          -- React Router view switching
+        Page Content  -- uses supabase client for data
 ```
 
-### Optimization: shared AuthProvider
+### Astro wrapper
 
-If using a client-side router within the admin (e.g., React Router), wrap the router with a single `AuthProvider` at the top level instead of repeating it per page. If each admin page is a separate Astro page (separate React islands), each island needs its own `AuthProvider` -- but the session is shared via `localStorage`, so there is no redundant auth check.
+All admin routes except login use a single Astro page that mounts `AdminApp`:
+
+```astro
+---
+// src/pages/admin/[...path].astro
+import AdminLayout from '../../layouts/AdminLayout.astro'
+import { AdminApp } from '../../components/admin/AdminApp'
+---
+
+<AdminLayout title="Admin | Tekon">
+  <AdminApp client:only="react" />
+</AdminLayout>
+```
+
+The catch-all `[...path].astro` ensures all `/admin/*` URLs serve the same HTML shell, letting React Router handle routing client-side.
 
 ## 8. Supabase Client with Auth
 
@@ -553,7 +583,7 @@ const { data: { publicUrl } } = supabase.storage
 |-------|--------------|----------------------|
 | categories | SELECT | SELECT, INSERT, UPDATE, DELETE |
 | forklifts | SELECT (where `is_published = true`) | SELECT, INSERT, UPDATE, DELETE |
-| forklift_specs | SELECT | SELECT, INSERT, UPDATE, DELETE |
+| forklift_specs | SELECT (parent forklift published) | SELECT, INSERT, UPDATE, DELETE |
 | inquiries | INSERT (for contact form) | SELECT, UPDATE, DELETE |
 
 ### SQL policies
@@ -577,10 +607,16 @@ CREATE POLICY "Admin full access to forklifts"
   ON forklifts FOR ALL
   USING (auth.role() = 'authenticated');
 
--- Forklift specs: public read, admin full access
+-- Forklift specs: public read (if parent forklift is published), admin full access
 CREATE POLICY "Public can read specs"
   ON forklift_specs FOR SELECT
-  USING (true);
+  USING (
+    EXISTS (
+      SELECT 1 FROM forklifts
+      WHERE forklifts.id = forklift_specs.forklift_id
+        AND forklifts.is_published = true
+    )
+  );
 
 CREATE POLICY "Admin full access to specs"
   ON forklift_specs FOR ALL
@@ -699,11 +735,12 @@ This goes in `AdminLayout.astro` so it applies to every admin page.
 | File | Purpose |
 |------|---------|
 | `src/lib/supabase.ts` | Supabase client singleton |
+| `src/components/admin/AdminApp.tsx` | Single React SPA with React Router (all admin views) |
 | `src/components/admin/AuthProvider.tsx` | Auth context + session state |
 | `src/components/admin/AuthGuard.tsx` | Route protection wrapper |
 | `src/components/admin/LoginPage.tsx` | Login form |
 | `src/layouts/AdminLayout.astro` | HTML shell for admin pages |
 | `src/pages/admin/login.astro` | Login page (Astro wrapper) |
-| `src/pages/admin/index.astro` | Dashboard page (Astro wrapper) |
+| `src/pages/admin/[...path].astro` | Catch-all Astro page mounting AdminApp SPA |
 | `public/robots.txt` | Block admin from crawlers |
 | `supabase/migrations/XXX_rls_policies.sql` | RLS policy definitions |

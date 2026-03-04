@@ -20,7 +20,17 @@ Rewrite of [carretillastekon.com](https://www.carretillastekon.com/) from WordPr
 
 ## Architecture
 
-Public pages are pre-rendered static HTML by Astro (near-zero JS). Interactive features (search, filters, admin, contact form) are React islands hydrated client-side.
+Public pages are pre-rendered static HTML by Astro (near-zero JS). Interactive features (search, filters, admin, contact form) are React islands hydrated client-side. Cross-island state sharing uses [nanostores](https://github.com/nanostores/nanostores) (~1KB).
+
+### Hydration Directives
+
+| Component | Directive | Rationale |
+|-----------|-----------|-----------|
+| SearchBar | `client:load` | Must be interactive immediately |
+| FeaturedCarousel | `client:visible` | Below hero, loads when scrolled into view |
+| ProductGrid + FilterSidebar | `client:idle` | Can wait for browser idle |
+| ContactForm | `client:visible` | Typically at bottom of page |
+| AdminApp | `client:only="react"` | Full React SPA, uses browser APIs |
 
 ```
 src/
@@ -62,7 +72,7 @@ supabase/
 | is_published | boolean | Draft/published toggle |
 | created_at | timestamptz | Auto |
 | updated_at | timestamptz | Auto |
-| fts | tsvector | Generated column for full-text search (name + description + category) |
+| fts | tsvector | Generated column for full-text search (name + short_description + description); category matched via RPC function |
 
 ### forklift_specs
 | Column | Type | Notes |
@@ -121,25 +131,27 @@ Specs stored as rows (not columns) so the admin can add/remove spec types withou
 - Active filter count as badge on mobile button
 - "Limpiar filtros" reset button
 - URL params synced (`?capacidad_min=1000&tipo=electrico`) — shareable
-- Client-side filtering (full dataset loaded on mount, ~20-30 items)
+- Data pre-rendered at build time for SEO; React island re-fetches on mount for freshness. Filtering is client-side (~20-30 items)
 
 ## Admin Panel
 
 Protected by Supabase Auth (email + password). Single admin account.
 
-| Route | Purpose |
-|-------|---------|
-| `/admin/login` | Login form |
+Single React SPA (`AdminApp.tsx`) with React Router handling all admin views internally. Login is a separate Astro page; all other `/admin/*` routes load the same `AdminApp` island with `client:only="react"`.
+
+| View (React Router) | Purpose |
+|---------------------|---------|
 | `/admin` | Dashboard: forklift count, unread inquiries |
 | `/admin/carretillas` | Forklift list table, search, filter by category, inline publish toggle |
 | `/admin/carretillas/nueva` | Create forklift form |
-| `/admin/carretillas/[id]` | Edit forklift form |
+| `/admin/carretillas/:id` | Edit forklift form |
 | `/admin/categorias` | Category CRUD (inline edit list) |
 | `/admin/consultas` | Inquiries table: name, email, date, forklift, read/unread. Click to expand |
 
 ### Forklift Form
 
 - Name, slug (auto-generated), category dropdown
+- Short description (plain text for cards/search results)
 - Description (markdown editor or basic WYSIWYG)
 - Image upload (drag & drop → Supabase Storage)
 - PDF catalog upload
@@ -194,6 +206,6 @@ Target: non-technical user adds a new forklift in under 2 minutes.
 
 1. Supabase project created, schema migrated, storage bucket configured
 2. Vercel project connected to git repo
-3. Environment variables: `SUPABASE_URL`, `SUPABASE_ANON_KEY`, `SUPABASE_SERVICE_KEY`, `RESEND_API_KEY`
+3. Environment variables: `PUBLIC_SUPABASE_URL`, `PUBLIC_SUPABASE_ANON_KEY` (client-side), `SUPABASE_SERVICE_ROLE_KEY` (server-side only), `RESEND_API_KEY`
 4. Push to main → Vercel builds and deploys
 5. DNS: point `carretillastekon.com` to Vercel

@@ -54,7 +54,7 @@ graph TD
 |----------|--------------|-------|
 | `SUPABASE_URL` | Settings > API > Project URL | Base URL for all API calls |
 | `SUPABASE_ANON_KEY` | Settings > API > `anon` `public` | Client-side, subject to RLS |
-| `SUPABASE_SERVICE_KEY` | Settings > API > `service_role` `secret` | Server-side only, bypasses RLS |
+| `SUPABASE_SERVICE_ROLE_KEY` | Settings > API > `service_role` `secret` | Server-side only, bypasses RLS |
 | `RESEND_API_KEY` | Resend dashboard | Used in Edge Function for email |
 
 ### Environment variables
@@ -67,7 +67,7 @@ graph TD
 # .env (local development)
 SUPABASE_URL=https://your-project-id.supabase.co
 SUPABASE_ANON_KEY=eyJhbGciOiJIUzI1NiIs...
-SUPABASE_SERVICE_KEY=eyJhbGciOiJIUzI1NiIs...
+SUPABASE_SERVICE_ROLE_KEY=eyJhbGciOiJIUzI1NiIs...
 RESEND_API_KEY=re_xxxxxxxxxx
 ```
 
@@ -516,7 +516,7 @@ const { data: { publicUrl } } = supabase.storage
 | Events | `INSERT` |
 | Type | Supabase Edge Function |
 | Edge Function | `send-inquiry-email` |
-| HTTP Headers | `Authorization: Bearer <SUPABASE_SERVICE_KEY>` |
+| HTTP Headers | `Authorization: Bearer <SUPABASE_SERVICE_ROLE_KEY>` |
 
 ### How it works
 
@@ -574,7 +574,7 @@ import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
 
 const RESEND_API_KEY = Deno.env.get('RESEND_API_KEY')!;
 const SUPABASE_URL = Deno.env.get('SUPABASE_URL')!;
-const SUPABASE_SERVICE_KEY = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
+const SUPABASE_SERVICE_ROLE_KEY = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
 
 serve(async (req) => {
   try {
@@ -584,7 +584,7 @@ serve(async (req) => {
     // Optionally fetch forklift name if forklift_id is present
     let forkliftName = '';
     if (inquiry.forklift_id) {
-      const supabase = createClient(SUPABASE_URL, SUPABASE_SERVICE_KEY);
+      const supabase = createClient(SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY);
       const { data } = await supabase
         .from('forklifts')
         .select('name')
@@ -673,10 +673,11 @@ npm install @supabase/supabase-js
 ```typescript
 import { createClient } from '@supabase/supabase-js';
 
-const supabaseUrl = import.meta.env.SUPABASE_URL;
-const supabaseAnonKey = import.meta.env.SUPABASE_ANON_KEY;
+// PUBLIC_ prefix required for Astro to expose vars to client-side code
+const supabaseUrl = import.meta.env.PUBLIC_SUPABASE_URL;
+const supabaseAnonKey = import.meta.env.PUBLIC_SUPABASE_ANON_KEY;
 
-// Public client (used in components and public pages)
+// Public client (used in React islands and public pages)
 // Uses anon key, subject to RLS policies
 export const supabase = createClient(supabaseUrl, supabaseAnonKey);
 ```
@@ -687,7 +688,7 @@ export const supabase = createClient(supabaseUrl, supabaseAnonKey);
 import { createClient } from '@supabase/supabase-js';
 
 const supabaseUrl = import.meta.env.SUPABASE_URL;
-const supabaseServiceKey = import.meta.env.SUPABASE_SERVICE_KEY;
+const supabaseServiceKey = import.meta.env.SUPABASE_SERVICE_ROLE_KEY;
 
 // Server client (used in Astro server routes and SSR pages)
 // Uses service role key, bypasses RLS
@@ -710,7 +711,7 @@ In `astro.config.mjs`, Supabase variables need the `SUPABASE_` prefix and must b
 # .env
 SUPABASE_URL=https://your-project.supabase.co
 SUPABASE_ANON_KEY=eyJ...
-SUPABASE_SERVICE_KEY=eyJ...
+SUPABASE_SERVICE_ROLE_KEY=eyJ...
 ```
 
 For client-side access (React islands), variables must use the `PUBLIC_` prefix:
@@ -797,7 +798,7 @@ Or upload programmatically with a script:
 import { createClient } from '@supabase/supabase-js';
 import fs from 'fs';
 
-const supabase = createClient(SUPABASE_URL, SUPABASE_SERVICE_KEY);
+const supabase = createClient(SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY);
 
 const files = fs.readdirSync('./seed-images');
 for (const file of files) {
