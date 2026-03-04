@@ -1,6 +1,6 @@
 # Tekon Website Rewrite — PRD
 
-**Status:** Draft
+**Status:** Approved
 **Created:** 2026-03-04
 **Last Updated:** 2026-03-04
 
@@ -55,6 +55,11 @@ Carretillastekon.com currently runs on WordPress + Elementor, which is slow, har
 
 ### Phase 1: Foundation & Infrastructure
 
+- [ ] Task 0: Extract content and assets from current WordPress site
+  **Description:** Scrape carretillastekon.com to extract all reusable content before building: (1) forklift data — names, short descriptions, full descriptions, specs, image URLs; (2) brand assets — logo SVG and exact brand green hex color; (3) company text — about page, solutions/services descriptions; (4) legal documents — privacy policy, cookie policy, legal notice. Save structured output (JSON for forklifts, files for assets) to `.claude/extracted/` for use in database seeding and content tasks.
+  **Skills to invoke:** /code
+  **How to validate:** `.claude/extracted/` contains `forklifts.json`, `brand.json`, and text files for all static pages; logo SVG renders correctly
+
 - [ ] Task 1: Initialize Astro 5 project with React 19 integration
   **Description:** Create Astro 5 project, install `@astrojs/react`, configure React 19, install Tailwind CSS 4 with `@tailwindcss/vite`, initialize shadcn/ui. Set up project structure: `src/pages/`, `src/components/`, `src/layouts/`, `src/lib/`, `src/styles/`, `supabase/migrations/`.
   **Skills to invoke:** /code, `astro-framework`
@@ -66,9 +71,9 @@ Carretillastekon.com currently runs on WordPress + Elementor, which is slow, har
   **How to validate:** Theme colors and typography render correctly across breakpoints
 
 - [ ] Task 3: Set up Supabase project and database schema
-  **Description:** Create SQL migration files for all 4 tables (`categories`, `forklifts`, `forklift_specs`, `inquiries`) with proper types, constraints, FKs (categories ON DELETE RESTRICT, specs ON DELETE CASCADE, inquiries forklift ON DELETE SET NULL). Add `fts` generated tsvector column on forklifts with GIN index. Create `updated_at` auto-update trigger. Create `search_forklifts` RPC function with category JOIN. Set up Spanish text search config.
+  **Description:** Create SQL migration files for all 4 tables (`categories`, `forklifts`, `forklift_specs`, `inquiries`) with proper types, constraints, FKs (categories ON DELETE RESTRICT, specs ON DELETE CASCADE, inquiries forklift ON DELETE SET NULL). Add `fts` generated tsvector column on forklifts with GIN index. Create `updated_at` auto-update trigger. Create `search_forklifts` RPC function with category JOIN. Set up Spanish text search config. After migrations apply, seed the database with content extracted in Task 0 (`forklifts.json`) so the site has real data from launch.
   **Skills to invoke:** /code, `supabase-postgres-best-practices` (schema-*, query-*)
-  **How to validate:** Migrations apply cleanly to Supabase, `search_forklifts` RPC returns expected results
+  **How to validate:** Migrations apply cleanly to Supabase, `search_forklifts` RPC returns expected results, seeded forklifts appear in listing queries
   **Reference:** `.claude/docs/supabase-setup-schema.md`
 
 - [ ] Task 4: Configure Supabase RLS policies
@@ -219,7 +224,7 @@ Carretillastekon.com currently runs on WordPress + Elementor, which is slow, har
   **How to validate:** Content renders correctly, JSON-LD present
 
 - [ ] Task 27: Build Contact page (`/contacto`)
-  **Description:** Contact form island (standalone, no forklift reference), phone number, address, Google Maps embed (`<iframe>`). LocalBusiness JSON-LD.
+  **Description:** Contact form island (standalone, no forklift reference), phone number, address, Google Maps embed (`<iframe>` free embed — no API key required). LocalBusiness JSON-LD.
   **Skills to invoke:** /code, `astro-framework` (references/components.md, references/client-directives.md)
   **How to validate:** Form works, map renders, contact info displayed
 
@@ -291,7 +296,7 @@ Carretillastekon.com currently runs on WordPress + Elementor, which is slow, har
 ## Dependencies
 
 - **Internal:** Supabase schema must be set up before admin panel or public pages
-- **External:** Supabase project (free tier), Vercel account, Resend account, Google Maps API key (for embed)
+- **External:** Supabase project (free tier), Vercel account, Resend account
 - **Content:** Actual forklift data, company text, legal documents, logo/brand assets from current site
 
 ## Risks
@@ -306,14 +311,16 @@ Carretillastekon.com currently runs on WordPress + Elementor, which is slow, har
 | Bot spam on contact form | Medium | Honeypot field initially; can add Turnstile/hCaptcha later |
 | Vercel rebuild required for new detail pages | Low | Documented in admin UI; listing pages use client-side fetch for immediate visibility |
 
-## Open Questions
+## Resolved Decisions
 
-1. **Content source:** How will we obtain the actual forklift data, company text, and legal documents? Manual entry vs. export from current WordPress?
-2. **Brand assets:** Do we have access to the Tekon logo in SVG format and the exact brand green color code?
-3. **Google Maps:** Is there an existing Google Maps API key, or should we use a free iframe embed?
-4. **Domain DNS:** Who manages `carretillastekon.com` DNS? What's the process for pointing it to Vercel?
-5. **Admin account:** What email should be used for the single admin account?
-6. **Actual forklift content:** Are there specific forklift models, specs, and descriptions ready, or will the admin populate these after launch?
+| # | Question | Answer |
+|---|----------|--------|
+| 1 | Content source | Extract from current WordPress website (carretillastekon.com) |
+| 2 | Brand assets | Extract from current website (logo, colors) |
+| 3 | Google Maps | Free iframe embed — no API key needed |
+| 4 | Domain DNS | Skip for now, use placeholder |
+| 5 | Admin account | monleon_89@hotmail.com |
+| 6 | Actual forklift content | Extract from current website; admin updates later after launch |
 
 ## Approval
-- [ ] User approved
+- [x] User approved
