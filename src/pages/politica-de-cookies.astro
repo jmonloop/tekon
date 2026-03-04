@@ -1,0 +1,137 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+const title = 'Política de Cookies | Carretillas Tekon';
+const description =
+  'Política de cookies de Carretillas Tekon S.L.U. Información sobre el uso de cookies en nuestra página web.';
+---
+
+<Layout title={title} description={description}>
+  <section
+    class="bg-gradient-to-br from-primary/10 via-background to-background py-16 md:py-24"
+    aria-labelledby="cookies-heading"
+    data-testid="cookies-hero"
+  >
+    <div class="container mx-auto px-4">
+      <div class="max-w-3xl">
+        <p class="text-sm font-semibold text-primary uppercase tracking-wider mb-3">
+          Información legal
+        </p>
+        <h1
+          id="cookies-heading"
+          class="text-4xl md:text-5xl font-bold text-foreground leading-tight mb-6"
+        >
+          Política de Cookies
+        </h1>
+        <p class="text-lg text-muted-foreground max-w-2xl">
+          Información sobre el uso de cookies en el sitio web de Carretillas Tekon.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section
+    class="py-16 bg-background"
+    aria-labelledby="cookies-content-heading"
+    data-testid="cookies-content"
+  >
+    <div class="container mx-auto px-4">
+      <div class="max-w-3xl mx-auto">
+        <h2
+          id="cookies-content-heading"
+          class="text-xl font-bold text-foreground mt-0 mb-4"
+          data-testid="cookies-what-heading"
+        >
+          ¿Qué son las cookies?
+        </h2>
+        <p class="text-muted-foreground leading-relaxed mb-8">
+          Las cookies son pequeños archivos de texto que los sitios web instalan en el navegador
+          del usuario cuando este visita una página. Permiten que el sitio recuerde información
+          sobre su visita, como su idioma preferido y otras opciones de configuración, lo que
+          facilita su próxima visita y hace que el sitio le resulte más útil.
+        </p>
+
+        <h2 class="text-xl font-bold text-foreground mt-10 mb-4" data-testid="cookies-types-heading">
+          ¿Qué tipos de cookies utilizamos?
+        </h2>
+        <p class="text-muted-foreground leading-relaxed mb-4">
+          Este sitio web puede utilizar los siguientes tipos de cookies:
+        </p>
+        <ul
+          class="space-y-4 text-muted-foreground mb-8 list-none"
+          data-testid="cookies-types-list"
+        >
+          <li class="rounded-lg border border-border bg-muted/30 p-4">
+            <strong class="text-foreground block mb-1">Cookies técnicas</strong>
+            Son imprescindibles para la navegación y el correcto funcionamiento del sitio web.
+            Permiten controlar el tráfico y la comunicación de datos, identificar la sesión y
+            acceder a partes de acceso restringido.
+          </li>
+          <li class="rounded-lg border border-border bg-muted/30 p-4">
+            <strong class="text-foreground block mb-1">Cookies de análisis</strong>
+            Permiten cuantificar el número de usuarios y así realizar la medición y análisis
+            estadístico de la utilización que hacen los usuarios del servicio ofertado.
+          </li>
+          <li class="rounded-lg border border-border bg-muted/30 p-4">
+            <strong class="text-foreground block mb-1">Cookies de personalización</strong>
+            Permiten al usuario acceder al servicio con algunas características de carácter general
+            predefinidas en función de una serie de criterios en el terminal del usuario, como el
+            idioma o el tipo de navegador.
+          </li>
+        </ul>
+
+        <h2 class="text-xl font-bold text-foreground mt-10 mb-4">
+          ¿Cómo puede gestionar las cookies?
+        </h2>
+        <p class="text-muted-foreground leading-relaxed mb-4">
+          Puede permitir, bloquear o eliminar las cookies instaladas en su equipo mediante la
+          configuración de las opciones del navegador instalado en su dispositivo. A continuación
+          le indicamos cómo hacerlo en los principales navegadores:
+        </p>
+        <ul class="space-y-2 text-muted-foreground mb-8" data-testid="cookies-browsers-list">
+          <li>
+            <strong class="text-foreground">Google Chrome:</strong> Configuración &gt; Privacidad y seguridad
+            &gt; Cookies y otros datos de sitios
+          </li>
+          <li>
+            <strong class="text-foreground">Mozilla Firefox:</strong> Opciones &gt; Privacidad y seguridad
+            &gt; Cookies y datos del sitio
+          </li>
+          <li>
+            <strong class="text-foreground">Safari:</strong> Preferencias &gt; Privacidad &gt; Cookies
+            y datos de sitio web
+          </li>
+          <li>
+            <strong class="text-foreground">Microsoft Edge:</strong> Configuración &gt; Privacidad,
+            búsqueda y servicios &gt; Cookies
+          </li>
+        </ul>
+
+        <h2 class="text-xl font-bold text-foreground mt-10 mb-4">
+          Más información
+        </h2>
+        <p class="text-muted-foreground leading-relaxed mb-4">
+          Para más información sobre el tratamiento de sus datos personales, puede consultar
+          nuestra{' '}
+          <a
+            href="/politica-de-privacidad"
+            class="text-primary hover:underline"
+            data-testid="cookies-privacy-link"
+          >
+            Política de Privacidad
+          </a>.
+        </p>
+        <p class="text-muted-foreground leading-relaxed mb-8">
+          Si tiene cualquier consulta sobre nuestra política de cookies, puede contactarnos en{' '}
+          <a
+            href="mailto:info@carretillastekon.com"
+            class="text-primary hover:underline"
+            data-testid="cookies-email"
+          >
+            info@carretillastekon.com
+          </a>.
+        </p>
+      </div>
+    </div>
+  </section>
+</Layout>

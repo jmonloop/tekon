@@ -1,0 +1,144 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+const title = 'Aviso Legal | Carretillas Tekon';
+const description =
+  'Aviso legal de Carretillas Tekon S.L.U. Identificación del titular del sitio web y condiciones de uso conforme a la Ley 34/2002 (LSSI-CE).';
+---
+
+<Layout title={title} description={description}>
+  <section
+    class="bg-gradient-to-br from-primary/10 via-background to-background py-16 md:py-24"
+    aria-labelledby="legal-heading"
+    data-testid="legal-hero"
+  >
+    <div class="container mx-auto px-4">
+      <div class="max-w-3xl">
+        <p class="text-sm font-semibold text-primary uppercase tracking-wider mb-3">
+          Información legal
+        </p>
+        <h1
+          id="legal-heading"
+          class="text-4xl md:text-5xl font-bold text-foreground leading-tight mb-6"
+        >
+          Aviso Legal
+        </h1>
+        <p class="text-lg text-muted-foreground max-w-2xl">
+          En cumplimiento de la Ley 34/2002, de 11 de julio, de Servicios de la Sociedad de la
+          Información y Comercio Electrónico (LSSI-CE).
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section
+    class="py-16 bg-background"
+    aria-labelledby="legal-content-heading"
+    data-testid="legal-content"
+  >
+    <div class="container mx-auto px-4">
+      <div class="max-w-3xl mx-auto">
+        <h2
+          id="legal-content-heading"
+          class="text-xl font-bold text-foreground mt-0 mb-4"
+          data-testid="legal-identification-heading"
+        >
+          Identificación y Titularidad del sitio Web
+        </h2>
+        <p class="text-muted-foreground leading-relaxed mb-4">
+          En cumplimiento de lo previsto en la Ley 34/2002, de 11 de julio, de Servicios de la
+          Sociedad de la Información y Comercio Electrónico, se informa que el titular del sitio
+          web es:
+        </p>
+        <ul
+          class="space-y-1 text-muted-foreground mb-8"
+          data-testid="legal-identification-data"
+        >
+          <li><strong class="text-foreground">Denominación Social:</strong> Carretillas Tekon S.L.U</li>
+          <li>
+            <strong class="text-foreground">Domicilio Social:</strong> Camino Guardarany, S/N, 46410
+            Sueca (Valencia)
+          </li>
+          <li><strong class="text-foreground">CIF:</strong> B96416201</li>
+          <li>
+            <strong class="text-foreground">Teléfono:</strong>
+            <a
+              href="tel:+34961705113"
+              class="text-primary hover:underline"
+              data-testid="legal-phone"
+            >+34 961 705 113</a>
+          </li>
+          <li>
+            <strong class="text-foreground">Email:</strong>
+            <a
+              href="mailto:info@carretillastekon.com"
+              class="text-primary hover:underline"
+              data-testid="legal-email"
+            >info@carretillastekon.com</a>
+          </li>
+        </ul>
+
+        <h2 class="text-xl font-bold text-foreground mt-10 mb-4" data-testid="legal-conditions-heading">
+          Condiciones de uso
+        </h2>
+        <p class="text-muted-foreground leading-relaxed mb-8">
+          El acceso al sitio web es libre y gratuito. Cuando para el acceso a determinados
+          contenidos o para la utilización de algún servicio sea necesario facilitar datos de
+          carácter personal, los usuarios garantizarán su veracidad, exactitud, autenticidad y
+          vigencia. Carretillas Tekon S.L.U dará a dichos datos el tratamiento que corresponda en
+          función de su naturaleza o finalidad, en las condiciones y términos indicados en la
+          sección de{' '}
+          <a
+            href="/politica-de-privacidad"
+            class="text-primary hover:underline"
+            data-testid="legal-privacy-link"
+          >
+            Política de Privacidad
+          </a>.
+        </p>
+
+        <h2 class="text-xl font-bold text-foreground mt-10 mb-4">
+          Propiedad intelectual / Copyright
+        </h2>
+        <p class="text-muted-foreground leading-relaxed mb-4">
+          Carretillas Tekon S.L.U ostenta la titularidad del presente sitio web. Todos los derechos
+          de propiedad industrial e intelectual sobre este portal de Internet son titularidad
+          exclusiva de Carretillas Tekon S.L.U.
+        </p>
+        <p class="text-muted-foreground leading-relaxed mb-8">
+          Los usuarios del sitio web únicamente podrán realizar un uso privado, personal o
+          profesional de los contenidos de éste. Está absolutamente prohibido el uso del sitio web
+          o de alguno de sus elementos con fines comerciales o ilícitos. No se podrán realizar
+          actos de reproducción, modificación, distribución o comunicación pública del sitio web o
+          de sus contenidos sin el previo consentimiento por escrito de Carretillas Tekon S.L.U,
+          salvo autorización legal.
+        </p>
+
+        <h2 class="text-xl font-bold text-foreground mt-10 mb-4">
+          Exclusión de responsabilidad
+        </h2>
+        <p class="text-muted-foreground leading-relaxed mb-4">
+          Carretillas Tekon S.L.U no se hace responsable en ningún caso de ningún daño que se
+          pudiera causar a un tercero por los usuarios de la web como consecuencia del uso ilegal o
+          inadecuado del mismo, ni como consecuencia de los contenidos e informaciones accesibles o
+          facilitadas a través de ella, ni de los sitios vinculados a la misma.
+        </p>
+        <p class="text-muted-foreground leading-relaxed mb-8">
+          Los contenidos de esta página son de carácter general y no constituyen, en modo alguno,
+          la prestación de ningún servicio de asesoramiento de ningún tipo. Carretillas Tekon S.L.U
+          no se responsabiliza de los daños o perjuicios de cualquier tipo producidos al usuario
+          que traigan causa de fallos o desconexiones en las redes de telecomunicaciones que
+          produzcan la suspensión, cancelación o interrupción del servicio de la Web.
+        </p>
+
+        <h2 class="text-xl font-bold text-foreground mt-10 mb-4">
+          Legislación aplicable
+        </h2>
+        <p class="text-muted-foreground leading-relaxed mb-8">
+          El presente Aviso Legal y sus consecuencias se regirán en todo caso por la legislación
+          española que esté en vigor en cada momento.
+        </p>
+      </div>
+    </div>
+  </section>
+</Layout>
