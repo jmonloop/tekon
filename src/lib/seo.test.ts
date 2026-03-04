@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { localBusinessJsonLd, productJsonLd } from './seo';
+import { localBusinessJsonLd, productJsonLd, faqJsonLd } from './seo';
 
 describe('localBusinessJsonLd', () => {
   it('has required Schema.org fields', () => {
@@ -91,5 +91,47 @@ describe('productJsonLd', () => {
   it('links seller to LocalBusiness @id', () => {
     const result = productJsonLd(baseForklift);
     expect(result.offers.seller['@id']).toContain('/#organization');
+  });
+
+  it('description is at most 155 chars when falling back to description field', () => {
+    const longDesc = '<p>' + 'A'.repeat(200) + '</p>';
+    const forklift = { ...baseForklift, short_description: null, description: longDesc };
+    const result = productJsonLd(forklift);
+    expect(result.description.length).toBeLessThanOrEqual(155);
+  });
+
+  it('strips HTML tags from description fallback', () => {
+    const forklift = { ...baseForklift, short_description: null };
+    const result = productJsonLd(forklift);
+    expect(result.description).not.toContain('<p>');
+  });
+});
+
+describe('faqJsonLd', () => {
+  it('has required Schema.org fields', () => {
+    expect(faqJsonLd['@context']).toBe('https://schema.org');
+    expect(faqJsonLd['@type']).toBe('FAQPage');
+  });
+
+  it('contains at least one FAQ entry', () => {
+    expect(faqJsonLd.mainEntity.length).toBeGreaterThan(0);
+  });
+
+  it('each entry has Question type with name and acceptedAnswer', () => {
+    for (const item of faqJsonLd.mainEntity) {
+      expect(item['@type']).toBe('Question');
+      expect(typeof item.name).toBe('string');
+      expect(item.name.length).toBeGreaterThan(0);
+      expect(item.acceptedAnswer['@type']).toBe('Answer');
+      expect(typeof item.acceptedAnswer.text).toBe('string');
+      expect(item.acceptedAnswer.text.length).toBeGreaterThan(0);
+    }
+  });
+
+  it('includes Valencia location in FAQ content', () => {
+    const allText = faqJsonLd.mainEntity
+      .map((q) => q.name + ' ' + q.acceptedAnswer.text)
+      .join(' ');
+    expect(allText.toLowerCase()).toContain('valencia');
   });
 });
