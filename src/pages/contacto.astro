@@ -1,0 +1,234 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { localBusinessJsonLd } from '../lib/seo';
+import { ContactFormIsland } from '../components/ContactFormIsland';
+
+const title = 'Contacto | Carretillas Tekon — Valencia';
+const description =
+  'Contacta con Carretillas Tekon en Sueca, Valencia. Consultas sobre venta, alquiler y reparación de carretillas elevadoras.';
+const jsonLd = [localBusinessJsonLd];
+---
+
+<Layout title={title} description={description} jsonLd={jsonLd}>
+  {/* Page Header */}
+  <section
+    class="bg-gradient-to-br from-primary/10 via-background to-background py-16 md:py-24"
+    aria-labelledby="contact-heading"
+    data-testid="contact-hero"
+  >
+    <div class="container mx-auto px-4">
+      <div class="max-w-3xl">
+        <p class="text-sm font-semibold text-primary uppercase tracking-wider mb-3">
+          Estamos aquí para ayudarte
+        </p>
+        <h1
+          id="contact-heading"
+          class="text-4xl md:text-5xl font-bold text-foreground leading-tight mb-6"
+        >
+          Contacta con nosotros
+        </h1>
+        <p class="text-lg text-muted-foreground max-w-2xl">
+          ¿Tienes alguna pregunta sobre nuestras carretillas? Llámanos o envíanos un mensaje y te
+          responderemos a la mayor brevedad.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  {/* Contact Content */}
+  <section
+    class="py-16 bg-background"
+    aria-labelledby="contact-content-heading"
+    data-testid="contact-content"
+  >
+    <div class="container mx-auto px-4">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 max-w-5xl mx-auto">
+        {/* Contact Info */}
+        <div data-testid="contact-info">
+          <h2
+            id="contact-content-heading"
+            class="text-2xl font-bold text-foreground mb-8"
+            data-testid="contact-info-heading"
+          >
+            Información de contacto
+          </h2>
+
+          <div class="space-y-6">
+            {/* Phone */}
+            <div class="flex items-start gap-4" data-testid="contact-phone">
+              <div
+                class="flex-shrink-0 w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center"
+                aria-hidden="true"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  class="w-5 h-5 text-primary"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"
+                  ></path>
+                </svg>
+              </div>
+              <div>
+                <p class="text-sm font-semibold text-foreground mb-1">Teléfono</p>
+                <a
+                  href="tel:+34961705113"
+                  class="text-muted-foreground hover:text-primary transition-colors"
+                  data-testid="contact-phone-link"
+                >
+                  +34 961 705 113
+                </a>
+              </div>
+            </div>
+
+            {/* Email */}
+            <div class="flex items-start gap-4" data-testid="contact-email">
+              <div
+                class="flex-shrink-0 w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center"
+                aria-hidden="true"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  class="w-5 h-5 text-primary"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
+                  ></path>
+                </svg>
+              </div>
+              <div>
+                <p class="text-sm font-semibold text-foreground mb-1">Email</p>
+                <a
+                  href="mailto:info@carretillastekon.com"
+                  class="text-muted-foreground hover:text-primary transition-colors"
+                  data-testid="contact-email-link"
+                >
+                  info@carretillastekon.com
+                </a>
+              </div>
+            </div>
+
+            {/* Address */}
+            <div class="flex items-start gap-4" data-testid="contact-address">
+              <div
+                class="flex-shrink-0 w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center"
+                aria-hidden="true"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  class="w-5 h-5 text-primary"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
+                  ></path>
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
+                  ></path>
+                </svg>
+              </div>
+              <div>
+                <p class="text-sm font-semibold text-foreground mb-1">Dirección</p>
+                <address
+                  class="not-italic text-muted-foreground leading-relaxed"
+                  data-testid="contact-address-text"
+                >
+                  Camino Guardarany, S/N<br />
+                  46410 Sueca, Valencia<br />
+                  España
+                </address>
+              </div>
+            </div>
+
+            {/* Hours */}
+            <div class="flex items-start gap-4" data-testid="contact-hours">
+              <div
+                class="flex-shrink-0 w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center"
+                aria-hidden="true"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  class="w-5 h-5 text-primary"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
+                  ></path>
+                </svg>
+              </div>
+              <div>
+                <p class="text-sm font-semibold text-foreground mb-1">Horario</p>
+                <p class="text-muted-foreground" data-testid="contact-hours-text">
+                  Lunes a Viernes: 08:00 – 18:00
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Contact Form */}
+        <div data-testid="contact-form-wrapper">
+          <ContactFormIsland client:visible />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {/* Google Maps */}
+  <section
+    class="py-16 bg-muted/30"
+    aria-labelledby="map-heading"
+    data-testid="contact-map-section"
+  >
+    <div class="container mx-auto px-4">
+      <h2
+        id="map-heading"
+        class="text-2xl font-bold text-foreground mb-8 text-center"
+        data-testid="map-heading"
+      >
+        Cómo llegar
+      </h2>
+      <div
+        class="rounded-xl overflow-hidden border border-border shadow-sm max-w-4xl mx-auto"
+        data-testid="contact-map"
+      >
+        <iframe
+          title="Ubicación de Carretillas Tekon en Sueca, Valencia"
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3147.1234567890!2d-0.3117!3d39.2028!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMznCsDEyJzEwLjEiTiAwwrAxOCc0Mi4xIlc!5e0!3m2!1ses!2ses!4v1234567890"
+          width="100%"
+          height="450"
+          style="border:0;"
+          allowfullscreen
+          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade"
+          data-testid="google-maps-iframe"
+        ></iframe>
+      </div>
+    </div>
+  </section>
+</Layout>
