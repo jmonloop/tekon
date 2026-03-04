@@ -1,17 +1,246 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import { localBusinessJsonLd } from '../lib/seo';
+import { FeaturedForkliftsCarousel } from '../components/FeaturedForkliftsCarousel';
 
-const title = 'Carretillas Tekon - Venta, Alquiler y Reparacion de Carretillas en Valencia';
+const title = 'Carretillas Tekon | Venta, Alquiler y Servicio en Valencia';
 const description =
-  'Venta, alquiler y reparacion de carretillas elevadoras en Valencia y provincia. Desde 1989. Contacta con Tekon.';
+  'Especialistas en venta, alquiler y reparación de carretillas elevadoras en Valencia desde 1989. Apiladores, transpaletas, carretillas contrapesadas y montacargas.';
+
+const services = [
+  {
+    href: '/venta-de-carretillas',
+    title: 'Venta de Carretillas',
+    description:
+      'Amplio catálogo de carretillas elevadoras nuevas para todo tipo de uso industrial en Valencia.',
+    icon: '🏷️',
+    cta: 'Ver catálogo de venta',
+    testId: 'service-card-venta',
+  },
+  {
+    href: '/alquiler-de-carretillas',
+    title: 'Alquiler de Carretillas',
+    description:
+      'Alquiler flexible de carretillas elevadoras para proyectos cortos o de larga duración.',
+    icon: '📋',
+    cta: 'Ver opciones de alquiler',
+    testId: 'service-card-alquiler',
+  },
+  {
+    href: '/carretillas-de-segunda-mano',
+    title: 'Segunda Mano',
+    description:
+      'Carretillas de segunda mano revisadas y garantizadas a precios competitivos.',
+    icon: '♻️',
+    cta: 'Ver segunda mano',
+    testId: 'service-card-segunda-mano',
+  },
+];
 ---
 
-<Layout title={title} description={description}>
-  <div class="container mx-auto px-4 py-16 text-center">
-    <h1 class="text-4xl font-bold mb-4">Venta, Alquiler y Servicio de Carretillas Elevadoras en Valencia</h1>
-    <p class="text-muted-foreground text-lg max-w-2xl mx-auto">
-      Descubre nuestra selección de carretillas elevadoras en Valencia. Apiladores eléctricos,
-      transpaletas, carretillas contrapesadas y montacargas. Desde 1989.
-    </p>
-  </div>
+<Layout title={title} description={description} jsonLd={localBusinessJsonLd}>
+  {/* Hero Section */}
+  <section
+    class="relative bg-gradient-to-br from-primary/10 via-background to-background py-20 md:py-32"
+    aria-labelledby="hero-heading"
+    data-testid="hero-section"
+  >
+    <div class="container mx-auto px-4">
+      <div class="max-w-3xl">
+        <p class="text-sm font-semibold text-primary uppercase tracking-wider mb-3">
+          Desde 1989 en Valencia
+        </p>
+        <h1
+          id="hero-heading"
+          class="text-4xl md:text-5xl lg:text-6xl font-bold text-foreground leading-tight mb-6"
+        >
+          Venta, Alquiler y Servicio de Carretillas Elevadoras en Valencia
+        </h1>
+        <p class="text-lg md:text-xl text-muted-foreground max-w-2xl mb-8">
+          Especialistas en carretillas elevadoras en Valencia y provincia. Apiladores eléctricos,
+          transpaletas, carretillas contrapesadas y montacargas.
+        </p>
+        <div class="flex flex-col sm:flex-row gap-4">
+          <a
+            href="/venta-de-carretillas"
+            class="inline-flex items-center justify-center rounded-md bg-primary text-primary-foreground hover:bg-primary/90 h-11 px-8 text-base font-semibold transition-colors"
+            data-testid="hero-cta-primary"
+          >
+            Ver catálogo completo
+          </a>
+          <a
+            href="/contacto"
+            class="inline-flex items-center justify-center rounded-md border border-input bg-background hover:bg-accent hover:text-accent-foreground h-11 px-8 text-base font-semibold transition-colors"
+            data-testid="hero-cta-secondary"
+          >
+            Solicitar presupuesto
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {/* Service Cards */}
+  <section class="py-16 bg-background" aria-labelledby="services-heading">
+    <div class="container mx-auto px-4">
+      <h2 id="services-heading" class="text-2xl md:text-3xl font-bold text-center mb-3">
+        Nuestros Servicios
+      </h2>
+      <p class="text-muted-foreground text-center max-w-2xl mx-auto mb-10">
+        Soluciones completas de carretillas elevadoras para empresas en Valencia
+      </p>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6" data-testid="service-cards">
+        {
+          services.map((service) => (
+            <a
+              href={service.href}
+              class="group block rounded-xl border border-border bg-card p-6 shadow-sm hover:shadow-card-hover transition-shadow"
+              data-testid={service.testId}
+            >
+              <div class="text-4xl mb-4">{service.icon}</div>
+              <h3 class="text-xl font-semibold text-card-foreground mb-2">{service.title}</h3>
+              <p class="text-muted-foreground text-sm mb-4">{service.description}</p>
+              <span class="text-primary text-sm font-medium group-hover:underline">
+                {service.cta} →
+              </span>
+            </a>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  {/* Featured Forklifts */}
+  <section class="py-16 bg-muted/30" aria-labelledby="featured-heading">
+    <div class="container mx-auto px-4">
+      <div class="flex items-center justify-between mb-10">
+        <div>
+          <h2 id="featured-heading" class="text-2xl md:text-3xl font-bold mb-2">
+            Carretillas Destacadas
+          </h2>
+          <p class="text-muted-foreground">Nuestras últimas incorporaciones al catálogo</p>
+        </div>
+        <a
+          href="/venta-de-carretillas"
+          class="hidden md:inline-flex items-center text-primary text-sm font-medium hover:underline"
+        >
+          Ver todo el catálogo →
+        </a>
+      </div>
+      <FeaturedForkliftsCarousel client:visible limit={6} />
+      <div class="mt-8 text-center md:hidden">
+        <a
+          href="/venta-de-carretillas"
+          class="inline-flex items-center text-primary text-sm font-medium hover:underline"
+        >
+          Ver todo el catálogo →
+        </a>
+      </div>
+    </div>
+  </section>
+
+  {/* About Teaser */}
+  <section class="py-16 bg-background" aria-labelledby="about-heading" data-testid="about-section">
+    <div class="container mx-auto px-4">
+      <div class="max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+        <div>
+          <p class="text-sm font-semibold text-primary uppercase tracking-wider mb-3">
+            Sobre Nosotros
+          </p>
+          <h2 id="about-heading" class="text-2xl md:text-3xl font-bold mb-4">
+            Más de 35 años de experiencia en Valencia
+          </h2>
+          <p class="text-muted-foreground mb-4">
+            Carretillas Tekon lleva desde 1989 ofreciendo soluciones integrales de carretillas
+            elevadoras a empresas de Valencia y provincia.
+          </p>
+          <p class="text-muted-foreground mb-6">
+            Nuestro equipo técnico especializado garantiza el máximo rendimiento y disponibilidad
+            de su flota de carretillas.
+          </p>
+          <a
+            href="/sobre-nosotros"
+            class="inline-flex items-center text-primary font-medium hover:underline"
+            data-testid="about-link"
+          >
+            Conoce nuestra historia →
+          </a>
+        </div>
+        <div class="rounded-xl bg-muted/50 border border-border p-8 space-y-4">
+          <div class="flex items-start gap-4">
+            <div
+              class="flex-shrink-0 w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center text-primary font-bold"
+            >
+              ✓
+            </div>
+            <div>
+              <h3 class="font-semibold">Servicio técnico especializado</h3>
+              <p class="text-sm text-muted-foreground">
+                Reparación y mantenimiento de todas las marcas
+              </p>
+            </div>
+          </div>
+          <div class="flex items-start gap-4">
+            <div
+              class="flex-shrink-0 w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center text-primary font-bold"
+            >
+              ✓
+            </div>
+            <div>
+              <h3 class="font-semibold">Amplio stock disponible</h3>
+              <p class="text-sm text-muted-foreground">
+                Carretillas nuevas, de alquiler y segunda mano
+              </p>
+            </div>
+          </div>
+          <div class="flex items-start gap-4">
+            <div
+              class="flex-shrink-0 w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center text-primary font-bold"
+            >
+              ✓
+            </div>
+            <div>
+              <h3 class="font-semibold">Cobertura en toda Valencia</h3>
+              <p class="text-sm text-muted-foreground">
+                Servicio en toda la provincia de Valencia
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {/* Final CTA */}
+  <section
+    class="py-16 bg-primary/5 border-t border-primary/10"
+    aria-labelledby="cta-heading"
+    data-testid="cta-section"
+  >
+    <div class="container mx-auto px-4 text-center">
+      <h2 id="cta-heading" class="text-2xl md:text-3xl font-bold mb-4">
+        ¿Necesitas una carretilla elevadora en Valencia?
+      </h2>
+      <p class="text-muted-foreground max-w-2xl mx-auto mb-8">
+        Contacta con Carretillas Tekon para recibir asesoramiento personalizado y un presupuesto
+        sin compromiso.
+      </p>
+      <div class="flex flex-col sm:flex-row gap-4 justify-center">
+        <a
+          href="/contacto"
+          class="inline-flex items-center justify-center rounded-md bg-primary text-primary-foreground hover:bg-primary/90 h-11 px-8 text-base font-semibold transition-colors"
+          data-testid="cta-contact-link"
+        >
+          Contactar ahora
+        </a>
+        <a
+          href="tel:+34961705113"
+          class="inline-flex items-center justify-center rounded-md border border-input bg-background hover:bg-accent hover:text-accent-foreground h-11 px-8 text-base font-semibold transition-colors"
+          data-testid="cta-phone-link"
+        >
+          📞 +34 961 70 51 13
+        </a>
+      </div>
+    </div>
+  </section>
 </Layout>
