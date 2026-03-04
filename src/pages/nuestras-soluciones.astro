@@ -1,0 +1,241 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { localBusinessJsonLd, faqJsonLd } from '../lib/seo';
+
+const title = 'Soluciones para Carretillas Elevadoras en Valencia | Tekon';
+const description =
+  'Reparación, mantenimiento, electrónica y alquiler de carretillas en Valencia. Carretillas Tekon, desde 1989.';
+const jsonLd = [localBusinessJsonLd, faqJsonLd];
+
+const services = [
+  {
+    id: 'reparacion',
+    icon: '🔧',
+    title: 'Reparación de Carretillas',
+    description:
+      'Servicio técnico especializado para todo tipo de averías en carretillas elevadoras. Nuestros técnicos cuentan con más de 30 años de experiencia reparando carretillas eléctricas, diesel y de gas en Valencia y provincia.',
+    features: [
+      'Reparación de motores eléctricos y de combustión',
+      'Sustitución de componentes hidráulicos',
+      'Diagnóstico electrónico avanzado',
+      'Reparación en taller o desplazamiento a sus instalaciones',
+    ],
+  },
+  {
+    id: 'mantenimiento',
+    icon: '📋',
+    title: 'Mantenimiento Preventivo',
+    description:
+      'Contratos de mantenimiento periódico para garantizar el óptimo funcionamiento de su flota de carretillas. Reducimos tiempos de parada y prolongamos la vida útil de sus equipos.',
+    features: [
+      'Revisiones periódicas programadas',
+      'Cambio de aceites y filtros',
+      'Ajuste y calibración de sistemas',
+      'Informe técnico tras cada revisión',
+    ],
+  },
+  {
+    id: 'electronica',
+    icon: '⚡',
+    title: 'Electrónica Industrial',
+    description:
+      'Especialistas en reparación y mantenimiento de sistemas electrónicos de carretillas elevadoras. Diagnóstico y reparación de tarjetas de control, displays, sensores y sistemas de gestión de baterías.',
+    features: [
+      'Reparación de tarjetas electrónicas',
+      'Diagnóstico y programación de controladores',
+      'Mantenimiento y recarga de baterías',
+      'Actualización de firmware y software de control',
+    ],
+  },
+  {
+    id: 'alquiler',
+    icon: '🏭',
+    title: 'Alquiler de Carretillas',
+    description:
+      'Soluciones flexibles de alquiler de carretillas elevadoras para cubrir sus necesidades puntuales o de larga duración. Amplio catálogo de carretillas eléctricas, diesel y de gas disponibles en Valencia.',
+    features: [
+      'Alquiler a corto y largo plazo',
+      'Carretillas eléctricas, diesel y de gas',
+      'Mantenimiento incluido en el contrato',
+      'Asesoramiento para elegir el equipo más adecuado',
+    ],
+  },
+];
+
+const faqs = [
+  {
+    question: 'Cuanto cuesta alquilar una carretilla en Valencia?',
+    answer:
+      'El precio del alquiler de carretillas en Valencia depende del tipo de carretilla, la duracion del alquiler y las condiciones especificas. Contacta con Carretillas Tekon para un presupuesto personalizado.',
+  },
+  {
+    question: 'Que tipos de carretillas elevadoras vendeis?',
+    answer:
+      'Vendemos apiladores electricos, transpaletas, carretillas contrapesadas electricas y diesel, retractiles y mas. Todas disponibles en nuestra sede de Sueca, Valencia.',
+  },
+  {
+    question: 'Ofreceis servicio de reparacion de carretillas en Valencia?',
+    answer:
+      'Si, ofrecemos servicio tecnico y reparacion de carretillas elevadoras en Valencia y provincia. Nuestro equipo cuenta con mas de 30 anos de experiencia desde 1989.',
+  },
+  {
+    question: 'Teneis carretillas de segunda mano?',
+    answer:
+      'Si, disponemos de carretillas elevadoras de segunda mano revisadas y garantizadas. Consulta nuestro catalogo o contacta con nosotros para disponibilidad.',
+  },
+  {
+    question: 'Donde estais ubicados?',
+    answer:
+      'Carretillas Tekon esta ubicada en Sueca, en la provincia de Valencia. Damos servicio a toda la provincia de Valencia y alrededores.',
+  },
+];
+---
+
+<Layout title={title} description={description} jsonLd={jsonLd}>
+  {/* Page Header */}
+  <section
+    class="bg-gradient-to-br from-primary/10 via-background to-background py-16 md:py-24"
+    aria-labelledby="solutions-heading"
+    data-testid="solutions-hero"
+  >
+    <div class="container mx-auto px-4">
+      <div class="max-w-3xl">
+        <p class="text-sm font-semibold text-primary uppercase tracking-wider mb-3">
+          Desde 1989 en Valencia
+        </p>
+        <h1
+          id="solutions-heading"
+          class="text-4xl md:text-5xl font-bold text-foreground leading-tight mb-6"
+        >
+          Nuestras Soluciones para Carretillas en Valencia
+        </h1>
+        <p class="text-lg text-muted-foreground max-w-2xl">
+          Ofrecemos un servicio integral de reparación, mantenimiento, electrónica y alquiler de
+          carretillas elevadoras en Valencia y provincia. Más de 35 años de experiencia avalan
+          nuestro trabajo.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  {/* Service Sections */}
+  <section
+    class="py-16 bg-background"
+    aria-labelledby="services-heading"
+    data-testid="service-sections"
+  >
+    <div class="container mx-auto px-4">
+      <h2 id="services-heading" class="sr-only">Nuestros servicios</h2>
+      <div class="space-y-16">
+        {
+          services.map((service, index) => (
+            <div
+              class={`grid grid-cols-1 md:grid-cols-2 gap-10 items-center ${index % 2 === 1 ? 'md:grid-flow-col-dense' : ''}`}
+              data-testid={`service-section-${service.id}`}
+            >
+              <div class={index % 2 === 1 ? 'md:col-start-2' : ''}>
+                <div class="text-5xl mb-4" aria-hidden="true">
+                  {service.icon}
+                </div>
+                <h3 class="text-2xl md:text-3xl font-bold text-foreground mb-4">
+                  {service.title}
+                </h3>
+                <p class="text-muted-foreground mb-6 text-lg leading-relaxed">
+                  {service.description}
+                </p>
+                <a
+                  href="/contacto"
+                  class="inline-flex items-center justify-center rounded-md bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-6 text-sm font-semibold transition-colors"
+                >
+                  Solicitar información →
+                </a>
+              </div>
+              <div
+                class={`rounded-xl border border-border bg-muted/30 p-8 ${index % 2 === 1 ? 'md:col-start-1 md:row-start-1' : ''}`}
+              >
+                <h4 class="font-semibold text-foreground mb-4">¿Qué incluye?</h4>
+                <ul class="space-y-3" role="list">
+                  {service.features.map((feature) => (
+                    <li class="flex items-start gap-3">
+                      <span
+                        class="flex-shrink-0 w-5 h-5 rounded-full bg-primary/10 flex items-center justify-center text-primary text-xs font-bold mt-0.5"
+                        aria-hidden="true"
+                      >
+                        ✓
+                      </span>
+                      <span class="text-sm text-muted-foreground">{feature}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  {/* FAQ Section */}
+  <section class="py-16 bg-muted/30" aria-labelledby="faq-heading" data-testid="faq-section">
+    <div class="container mx-auto px-4">
+      <div class="max-w-3xl mx-auto">
+        <h2
+          id="faq-heading"
+          class="text-2xl md:text-3xl font-bold text-center mb-3"
+          data-testid="faq-heading"
+        >
+          Preguntas Frecuentes
+        </h2>
+        <p class="text-muted-foreground text-center mb-10">
+          Resolvemos las dudas más comunes sobre nuestros servicios en Valencia
+        </p>
+        <dl class="space-y-6" data-testid="faq-list">
+          {
+            faqs.map((faq, index) => (
+              <div
+                class="rounded-xl border border-border bg-card p-6"
+                data-testid={`faq-item-${index}`}
+              >
+                <dt class="font-semibold text-foreground mb-3 text-lg">{faq.question}</dt>
+                <dd class="text-muted-foreground leading-relaxed">{faq.answer}</dd>
+              </div>
+            ))
+          }
+        </dl>
+      </div>
+    </div>
+  </section>
+
+  {/* CTA Section */}
+  <section
+    class="py-16 bg-primary/5 border-t border-primary/10"
+    aria-labelledby="cta-heading"
+    data-testid="solutions-cta"
+  >
+    <div class="container mx-auto px-4 text-center">
+      <h2 id="cta-heading" class="text-2xl md:text-3xl font-bold mb-4">
+        ¿Necesitas ayuda con tu carretilla elevadora?
+      </h2>
+      <p class="text-muted-foreground max-w-2xl mx-auto mb-8">
+        Contacta con Carretillas Tekon para recibir asesoramiento personalizado. Estamos en Sueca,
+        Valencia, y damos servicio a toda la provincia.
+      </p>
+      <div class="flex flex-col sm:flex-row gap-4 justify-center">
+        <a
+          href="/contacto"
+          class="inline-flex items-center justify-center rounded-md bg-primary text-primary-foreground hover:bg-primary/90 h-11 px-8 text-base font-semibold transition-colors"
+          data-testid="cta-contact-link"
+        >
+          Contactar ahora
+        </a>
+        <a
+          href="tel:+34961705113"
+          class="inline-flex items-center justify-center rounded-md border border-input bg-background hover:bg-accent hover:text-accent-foreground h-11 px-8 text-base font-semibold transition-colors"
+          data-testid="cta-phone-link"
+        >
+          📞 +34 961 70 51 13
+        </a>
+      </div>
+    </div>
+  </section>
+</Layout>
