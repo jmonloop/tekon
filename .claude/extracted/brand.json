@@ -1,0 +1,26 @@
+{
+  "logo_url": "https://www.carretillastekon.com/wp-content/uploads/Tecon_green_2_reverse-1-1024x909.png",
+  "logo_filename": "Tecon_green_2_reverse-1-1024x909.png",
+  "brand_green_rgb": "rgb(66, 255, 30)",
+  "brand_green_hex": "#42FF1E",
+  "css_var_colors": [
+    {
+      "var": "--e-global-color-primary );}.elementor-210 .elementor-element.elementor-element-4903fe7 .elementor-icon-list-icon{width",
+      "value": "14px"
+    }
+  ],
+  "contact": {
+    "phone_landline": "96 170 51 13",
+    "phone_mobile": "638 946 040",
+    "address": "S N, Camino Guardarany, 0, 46410 Sueca, Valencia",
+    "postal_code": "46410",
+    "city": "Sueca",
+    "province": "Valencia",
+    "email": "info@carretillastekon.com",
+    "maps_url": "https://www.google.com/maps?ll=39.211328,-0.30538&z=11&t=m&hl=es-ES&gl=US&mapclient=embed&cid=12967233320852956093",
+    "geo": {
+      "lat": 39.211328,
+      "lng": -0.30538
+    }
+  }
+}

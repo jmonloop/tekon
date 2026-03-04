@@ -1,0 +1,47 @@
+[
+  {
+    "name": "Apiladores eléctricos",
+    "slug": "apiladores-electricos",
+    "sort_order": 0
+  },
+  {
+    "name": "Carretillas retráctiles",
+    "slug": "carretillas-retractiles",
+    "sort_order": 1
+  },
+  {
+    "name": "Carretillas eléctricas 4 ruedas",
+    "slug": "carretillas-electricas-4-ruedas",
+    "sort_order": 2
+  },
+  {
+    "name": "Carretillas eléctricas 3 ruedas",
+    "slug": "carretillas-electricas-3-ruedas",
+    "sort_order": 3
+  },
+  {
+    "name": "Soluciones de remolque",
+    "slug": "soluciones-de-remolque",
+    "sort_order": 4
+  },
+  {
+    "name": "Transpaletas eléctricas",
+    "slug": "transpaletas-electricas",
+    "sort_order": 5
+  },
+  {
+    "name": "Preparadoras de pedidos de bajo nivel",
+    "slug": "preparadoras-de-pedidos-de-bajo-nivel",
+    "sort_order": 6
+  },
+  {
+    "name": "Transpaletas manuales",
+    "slug": "transpaletas-manuales",
+    "sort_order": 7
+  },
+  {
+    "name": "Carretillas Diésel",
+    "slug": "carretillas-diesel",
+    "sort_order": 8
+  }
+]
