@@ -4,6 +4,16 @@ import { MemoryRouter } from 'react-router-dom';
 import type { Session, User } from '@supabase/supabase-js';
 
 // --- Supabase mock -----------------------------------------------------------
+const neverResolve = new Promise(() => {});
+const noopChain = {
+  select: () => noopChain,
+  order: () => neverResolve,
+  eq: () => neverResolve,
+  update: () => noopChain,
+  delete: () => noopChain,
+  insert: () => neverResolve,
+};
+
 vi.mock('../lib/supabase', () => ({
   supabase: {
     auth: {
@@ -11,6 +21,9 @@ vi.mock('../lib/supabase', () => ({
       onAuthStateChange: vi.fn(),
       signOut: vi.fn(),
     },
+    // Provide a from() that never resolves so child views stay in loading state
+    // without throwing. Individual view tests have their own mocks.
+    from: vi.fn(() => noopChain),
   },
 }));
 
