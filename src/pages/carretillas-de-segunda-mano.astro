@@ -1,0 +1,28 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { ForkliftListingIsland } from '../components/ForkliftListingIsland';
+
+const title = 'Carretillas de Segunda Mano en Valencia | Tekon';
+const description =
+  'Compra carretillas elevadoras de segunda mano en Valencia. Equipos revisados y con garantía. Ahorra en la compra de tu carretilla elevadora usada. Tekon, desde 1989.';
+---
+
+<Layout title={title} description={description}>
+  <div class="container mx-auto px-4 md:px-6 py-10">
+    <div class="mb-8">
+      <h1 class="text-3xl font-bold tracking-tight mb-3">
+        Carretillas de Segunda Mano en Valencia
+      </h1>
+      <p class="text-muted-foreground text-lg max-w-2xl">
+        Encuentra carretillas elevadoras de segunda mano en Valencia. Todos nuestros equipos
+        usados están revisados y cuentan con garantía para tu tranquilidad.
+      </p>
+    </div>
+
+    <ForkliftListingIsland
+      client:load
+      availabilityField="available_as_used"
+      pageTitle="Carretillas de Segunda Mano en Valencia"
+    />
+  </div>
+</Layout>

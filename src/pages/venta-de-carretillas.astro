@@ -1,0 +1,28 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { ForkliftListingIsland } from '../components/ForkliftListingIsland';
+
+const title = 'Venta de Carretillas Elevadoras en Valencia | Tekon';
+const description =
+  'Compra carretillas elevadoras en Valencia. Amplia selección de carretillas nuevas y de ocasión: eléctricas, diesel, transpaletas, apiladores. Tekon, desde 1989.';
+---
+
+<Layout title={title} description={description}>
+  <div class="container mx-auto px-4 md:px-6 py-10">
+    <div class="mb-8">
+      <h1 class="text-3xl font-bold tracking-tight mb-3">
+        Venta de Carretillas Elevadoras en Valencia
+      </h1>
+      <p class="text-muted-foreground text-lg max-w-2xl">
+        Descubre nuestra selección de carretillas elevadoras a la venta en Valencia y provincia.
+        Todas nuestras carretillas están revisadas y garantizadas.
+      </p>
+    </div>
+
+    <ForkliftListingIsland
+      client:load
+      availabilityField="available_for_sale"
+      pageTitle="Venta de Carretillas en Valencia"
+    />
+  </div>
+</Layout>

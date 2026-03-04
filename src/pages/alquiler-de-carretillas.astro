@@ -1,0 +1,28 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { ForkliftListingIsland } from '../components/ForkliftListingIsland';
+
+const title = 'Alquiler de Carretillas Elevadoras en Valencia | Tekon';
+const description =
+  'Alquiler de carretillas elevadoras en Valencia. Soluciones flexibles por días, semanas o meses. Carretillas eléctricas y de combustión disponibles. Tekon, desde 1989.';
+---
+
+<Layout title={title} description={description}>
+  <div class="container mx-auto px-4 md:px-6 py-10">
+    <div class="mb-8">
+      <h1 class="text-3xl font-bold tracking-tight mb-3">
+        Alquiler de Carretillas Elevadoras en Valencia
+      </h1>
+      <p class="text-muted-foreground text-lg max-w-2xl">
+        Alquila la carretilla elevadora que necesitas en Valencia. Disponemos de una amplia flota
+        de carretillas para alquiler a corto y largo plazo.
+      </p>
+    </div>
+
+    <ForkliftListingIsland
+      client:load
+      availabilityField="available_for_rental"
+      pageTitle="Alquiler de Carretillas en Valencia"
+    />
+  </div>
+</Layout>
