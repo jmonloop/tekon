@@ -13,6 +13,7 @@ Rewrite of [carretillastekon.com](https://www.carretillastekon.com/) from WordPr
 | Database | Supabase (Postgres) | Free tier |
 | Auth | Supabase Auth | Free tier |
 | Image storage | Supabase Storage (1GB) | Free tier |
+| Rich text editor | tiptap | Free |
 | Email | Resend (3,000 emails/month) | Free tier |
 | Hosting | Vercel | Free tier |
 
@@ -86,6 +87,12 @@ supabase/
 
 Specs stored as rows (not columns) so the admin can add/remove spec types without schema changes. Filters on product pages are generated dynamically from distinct `spec_name` values.
 
+### Supabase Storage Buckets
+| Bucket | Contents |
+|--------|----------|
+| forklift-images | Forklift photos (max 5MB, JPG/PNG/WebP) |
+| forklift-catalogs | PDF spec sheets (max 10MB) |
+
 ### inquiries
 | Column | Type | Notes |
 |--------|------|-------|
@@ -116,7 +123,7 @@ Specs stored as rows (not columns) so the admin can add/remove spec types withou
 ## Global Search
 
 - Search icon in header, expands into input on click
-- Debounced (300ms) → queries Supabase full-text search (`fts` column)
+- Debounced (300ms) → calls `search_forklifts` RPC function (full-text search on `fts` column + category name via JOIN)
 - Dropdown: up to 8 results with thumbnail, name, category badge
 - Click → navigates to `/carretillas/[slug]`
 - Empty state: "No se encontraron resultados"
@@ -152,13 +159,30 @@ Single React SPA (`AdminApp.tsx`) with React Router handling all admin views int
 
 - Name, slug (auto-generated), category dropdown
 - Short description (plain text for cards/search results)
-- Description (markdown editor or basic WYSIWYG)
+- Description (tiptap WYSIWYG editor, outputs HTML)
 - Image upload (drag & drop → Supabase Storage)
 - PDF catalog upload
 - Checkboxes: sale / rental / used / published
 - **Specs editor**: Dynamic table — "Add spec" button, each row has name, value, unit fields. Drag to reorder. Delete per row. Feels like editing a spreadsheet.
 
 Target: non-technical user adds a new forklift in under 2 minutes.
+
+## Content Rebuild Workflow
+
+`/carretillas/[slug]` pages are static HTML generated at build time. A newly published forklift has no detail page until Vercel rebuilds the site.
+
+**Solution:** Vercel Deploy Hook triggered from the admin panel.
+
+**Flow:**
+1. Admin publishes a forklift (sets `is_published = true`)
+2. Admin clicks "Rebuild site" button in the admin UI (or it auto-triggers on publish)
+3. Admin UI sends a `POST` to the Vercel Deploy Hook URL
+4. Vercel rebuilds (~30s) → new static page is live
+
+**Notes:**
+- The Deploy Hook URL is stored as env var `VERCEL_DEPLOY_HOOK_URL` (server-side only)
+- Listing pages (`/venta-de-carretillas`, `/alquiler-de-carretillas`, `/carretillas-de-segunda-mano`) are unaffected — their React islands re-fetch data from Supabase on mount, so new forklifts appear immediately
+- The sitemap.xml also requires a rebuild to include the new detail page URL
 
 ## Contact Form Flow
 
@@ -206,6 +230,15 @@ Target: non-technical user adds a new forklift in under 2 minutes.
 
 1. Supabase project created, schema migrated, storage bucket configured
 2. Vercel project connected to git repo
-3. Environment variables: `PUBLIC_SUPABASE_URL`, `PUBLIC_SUPABASE_ANON_KEY` (client-side), `SUPABASE_SERVICE_ROLE_KEY` (server-side only), `RESEND_API_KEY`
+3. Environment variables: `PUBLIC_SUPABASE_URL`, `PUBLIC_SUPABASE_ANON_KEY` (client-side), `SUPABASE_SERVICE_ROLE_KEY` (server-side only), `RESEND_API_KEY`, `VERCEL_DEPLOY_HOOK_URL` (server-side only)
 4. Push to main → Vercel builds and deploys
 5. DNS: point `carretillastekon.com` to Vercel
+
+## Related Documentation (pending)
+
+The following detailed docs are referenced by this design but not yet written:
+
+- `supabase-auth-admin.md` — Auth flow, AuthGuard, RLS policies
+- `supabase-setup-schema.md` — Migrations, RPC functions, edge functions
+- `astro-react-islands.md` — Islands architecture, nanostores, hydration
+- `product-filters-system.md` — Filter sidebar, URL params, client-side filtering
