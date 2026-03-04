@@ -1,17 +1,17 @@
 ---
-import '../styles/global.css';
+import Layout from '../layouts/Layout.astro';
+
+const title = 'Carretillas Tekon - Venta, Alquiler y Reparacion de Carretillas en Valencia';
+const description =
+  'Venta, alquiler y reparacion de carretillas elevadoras en Valencia y provincia. Desde 1989. Contacta con Tekon.';
 ---
 
-<html lang="es">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Carretillas Tekon — Venta y Alquiler de Carretillas en Valencia</title>
-	</head>
-	<body class="bg-white text-gray-900">
-		<h1 class="text-4xl font-bold text-center py-8">Carretillas Tekon</h1>
-	</body>
-</html>
+<Layout title={title} description={description}>
+  <div class="container mx-auto px-4 py-16 text-center">
+    <h1 class="text-4xl font-bold mb-4">Venta, Alquiler y Servicio de Carretillas Elevadoras en Valencia</h1>
+    <p class="text-muted-foreground text-lg max-w-2xl mx-auto">
+      Descubre nuestra selección de carretillas elevadoras en Valencia. Apiladores eléctricos,
+      transpaletas, carretillas contrapesadas y montacargas. Desde 1989.
+    </p>
+  </div>
+</Layout>
