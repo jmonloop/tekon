@@ -4,6 +4,7 @@ import { supabase } from '@/lib/supabase';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Skeleton } from '@/components/ui/skeleton';
+import { triggerDeploy } from '@/lib/deploy';
 
 interface DashboardStats {
   totalForklifts: number;
@@ -59,6 +60,14 @@ export function Dashboard() {
   const [stats, setStats] = useState<DashboardStats | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [deployStatus, setDeployStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
+
+  async function handleRebuild() {
+    setDeployStatus('loading');
+    const ok = await triggerDeploy();
+    setDeployStatus(ok ? 'success' : 'error');
+    setTimeout(() => setDeployStatus('idle'), 4000);
+  }
 
   useEffect(() => {
     async function fetchStats() {
@@ -144,7 +153,25 @@ export function Dashboard() {
           >
             Ver consultas
           </Button>
+          <Button
+            data-testid="rebuild-site-btn"
+            variant="outline"
+            disabled={deployStatus === 'loading'}
+            onClick={handleRebuild}
+          >
+            {deployStatus === 'loading' ? 'Reconstruyendo…' : 'Reconstruir sitio'}
+          </Button>
         </div>
+        {deployStatus === 'success' && (
+          <p data-testid="rebuild-success" className="text-sm text-green-600">
+            Reconstrucción iniciada correctamente.
+          </p>
+        )}
+        {deployStatus === 'error' && (
+          <p data-testid="rebuild-error" className="text-sm text-destructive">
+            Error al iniciar la reconstrucción.
+          </p>
+        )}
       </div>
     </div>
   );

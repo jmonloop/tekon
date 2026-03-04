@@ -1,5 +1,5 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
-import { render, screen, waitFor } from '@testing-library/react';
+import { render, screen, waitFor, act } from '@testing-library/react';
 import { fireEvent } from '@testing-library/react';
 import { MemoryRouter, Routes, Route } from 'react-router-dom';
 
@@ -13,8 +13,15 @@ vi.mock('../lib/supabase', () => {
   };
 });
 
+// --- Deploy mock -------------------------------------------------------------
+vi.mock('../lib/deploy', () => ({
+  triggerDeploy: vi.fn(),
+}));
+
 import { supabase } from '../lib/supabase';
+import { triggerDeploy } from '../lib/deploy';
 const mockFrom = vi.mocked(supabase.from);
+const mockTriggerDeploy = vi.mocked(triggerDeploy);
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type AnyReturn = any;
@@ -211,5 +218,89 @@ describe('Dashboard — error state', () => {
       expect(screen.getByTestId('dashboard-error')).toBeDefined();
     });
     expect(screen.getByTestId('dashboard-error').textContent).toContain('DB connection failed');
+  });
+});
+
+describe('Dashboard — rebuild site button', () => {
+  beforeEach(() => {
+    vi.clearAllMocks();
+    stubDashboardCounts(0, 0, 0);
+  });
+
+  it('renders the rebuild site button', async () => {
+    mockTriggerDeploy.mockResolvedValue(true);
+    renderDashboard();
+
+    await waitFor(() => {
+      expect(screen.queryAllByTestId('stat-skeleton')).toHaveLength(0);
+    });
+
+    expect(screen.getByTestId('rebuild-site-btn')).toBeDefined();
+  });
+
+  it('calls triggerDeploy when rebuild button is clicked', async () => {
+    mockTriggerDeploy.mockResolvedValue(true);
+    renderDashboard();
+
+    await waitFor(() => {
+      expect(screen.queryAllByTestId('stat-skeleton')).toHaveLength(0);
+    });
+
+    await act(async () => {
+      fireEvent.click(screen.getByTestId('rebuild-site-btn'));
+    });
+
+    expect(mockTriggerDeploy).toHaveBeenCalledTimes(1);
+  });
+
+  it('shows success message after successful rebuild', async () => {
+    mockTriggerDeploy.mockResolvedValue(true);
+    renderDashboard();
+
+    await waitFor(() => {
+      expect(screen.queryAllByTestId('stat-skeleton')).toHaveLength(0);
+    });
+
+    await act(async () => {
+      fireEvent.click(screen.getByTestId('rebuild-site-btn'));
+    });
+
+    await waitFor(() => {
+      expect(screen.getByTestId('rebuild-success')).toBeDefined();
+    });
+  });
+
+  it('shows error message after failed rebuild', async () => {
+    mockTriggerDeploy.mockResolvedValue(false);
+    renderDashboard();
+
+    await waitFor(() => {
+      expect(screen.queryAllByTestId('stat-skeleton')).toHaveLength(0);
+    });
+
+    await act(async () => {
+      fireEvent.click(screen.getByTestId('rebuild-site-btn'));
+    });
+
+    await waitFor(() => {
+      expect(screen.getByTestId('rebuild-error')).toBeDefined();
+    });
+  });
+
+  it('disables the button while rebuilding', async () => {
+    // Never resolves so we stay in loading state
+    mockTriggerDeploy.mockReturnValue(new Promise(() => {}));
+    renderDashboard();
+
+    await waitFor(() => {
+      expect(screen.queryAllByTestId('stat-skeleton')).toHaveLength(0);
+    });
+
+    fireEvent.click(screen.getByTestId('rebuild-site-btn'));
+
+    await waitFor(() => {
+      const btn = screen.getByTestId('rebuild-site-btn') as HTMLButtonElement;
+      expect(btn.disabled).toBe(true);
+    });
   });
 });
