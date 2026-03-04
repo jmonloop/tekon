@@ -1,0 +1,19 @@
+---
+import '../styles/global.css';
+import AdminApp from '../components/islands/AdminApp';
+import { ADMIN_TITLE, ADMIN_ROBOTS_META } from './admin-layout-data';
+---
+
+<html lang="es" dir="ltr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="robots" content={ADMIN_ROBOTS_META} />
+  <title>{ADMIN_TITLE}</title>
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="icon" href="/favicon.ico" />
+</head>
+<body>
+  <AdminApp client:only="react" />
+</body>
+</html>
