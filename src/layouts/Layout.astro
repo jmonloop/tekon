@@ -1,6 +1,7 @@
 ---
 import '../styles/global.css';
 import { navLinks, legalLinks, SITE_NAME, DEFAULT_OG_IMAGE_PATH } from './layout-data';
+import { SearchBar } from '../components/SearchBar';
 
 interface Props {
   title: string;
@@ -84,40 +85,17 @@ const ogImageUrl = ogImage || new URL(DEFAULT_OG_IMAGE_PATH, Astro.site).toStrin
         ))}
       </nav>
 
-      <!-- Desktop: search icon placeholder (replaced by SearchBar island in Task 19) -->
-      <div class="hidden md:flex items-center">
-        <button
-          type="button"
-          aria-label="Buscar"
-          class="p-2 rounded-md text-foreground/70 hover:text-brand hover:bg-accent transition-colors"
-          id="search-trigger"
-        >
-          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <circle cx="11" cy="11" r="8"/>
-            <path d="m21 21-4.35-4.35"/>
-          </svg>
-        </button>
-      </div>
-
-      <!-- Mobile: search + hamburger -->
-      <div class="flex md:hidden items-center gap-1">
-        <button
-          type="button"
-          aria-label="Buscar"
-          class="p-2 rounded-md text-foreground/70 hover:text-brand transition-colors"
-        >
-          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <circle cx="11" cy="11" r="8"/>
-            <path d="m21 21-4.35-4.35"/>
-          </svg>
-        </button>
+      <!-- SearchBar island (interactive on every page, desktop + mobile) -->
+      <div class="flex items-center gap-1">
+        <SearchBar client:load />
+        <!-- Hamburger: mobile only -->
         <button
           type="button"
           id="menu-toggle"
           aria-label="Abrir menú"
           aria-expanded="false"
           aria-controls="mobile-menu"
-          class="p-2 rounded-md text-foreground/70 hover:text-brand transition-colors"
+          class="md:hidden p-2 rounded-md text-foreground/70 hover:text-brand transition-colors"
         >
           <svg id="icon-menu" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
             <line x1="4" x2="20" y1="12" y2="12"/>
