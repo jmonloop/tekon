@@ -1,0 +1,66 @@
+---
+import '../styles/global.css';
+import LoadIsland from '../components/islands/LoadIsland';
+import VisibleIsland from '../components/islands/VisibleIsland';
+import CounterIsland from '../components/islands/CounterIsland';
+import DisplayIsland from '../components/islands/DisplayIsland';
+---
+
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>Validate Islands — Tekon</title>
+  </head>
+  <body class="bg-background text-foreground font-sans p-8 space-y-12">
+
+    <h1 class="text-3xl font-bold">Validación de React Islands con shadcn/ui</h1>
+
+    <!-- client:load — hydrates immediately on page load -->
+    <section class="space-y-4">
+      <h2 class="text-xl font-semibold">1. client:load — LoadIsland (Button interactivo)</h2>
+      <p class="text-muted-foreground text-sm">Se hidrata inmediatamente al cargar la página.</p>
+      <LoadIsland client:load />
+    </section>
+
+    <!-- client:visible — hydrates when scrolled into viewport -->
+    <section class="space-y-4">
+      <h2 class="text-xl font-semibold">2. client:visible — VisibleIsland (Card + Input)</h2>
+      <p class="text-muted-foreground text-sm">Se hidrata cuando entra en el viewport.</p>
+      <VisibleIsland client:visible />
+    </section>
+
+    <!-- client:idle — hydrates after browser is idle -->
+    <section class="space-y-4">
+      <h2 class="text-xl font-semibold">3. client:idle — LoadIsland (carga en idle)</h2>
+      <p class="text-muted-foreground text-sm">Se hidrata cuando el navegador está inactivo.</p>
+      <LoadIsland client:idle />
+    </section>
+
+    <!-- client:only="react" — skips SSR, renders only on client -->
+    <section class="space-y-4">
+      <h2 class="text-xl font-semibold">4. client:only="react" — VisibleIsland (sin SSR)</h2>
+      <p class="text-muted-foreground text-sm">No genera HTML en servidor; solo se renderiza en el cliente.</p>
+      <VisibleIsland client:only="react" />
+    </section>
+
+    <!-- nanostores cross-island state sharing -->
+    <section class="space-y-4">
+      <h2 class="text-xl font-semibold">5. nanostores — Estado compartido entre islands independientes</h2>
+      <p class="text-muted-foreground text-sm">
+        CounterIsland y DisplayIsland son árboles React independientes que comparten estado via nanostore.
+      </p>
+      <div class="flex gap-8 items-start">
+        <div class="space-y-2">
+          <p class="text-sm font-medium text-muted-foreground">Island 1: Contador</p>
+          <CounterIsland client:load />
+        </div>
+        <div class="space-y-2">
+          <p class="text-sm font-medium text-muted-foreground">Island 2: Display</p>
+          <DisplayIsland client:load />
+        </div>
+      </div>
+    </section>
+
+  </body>
+</html>
