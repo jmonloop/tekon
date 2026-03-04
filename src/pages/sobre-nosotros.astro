@@ -1,0 +1,263 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { localBusinessJsonLd } from '../lib/seo';
+
+const title = 'Sobre Nosotros | Carretillas Tekon — Desde 1989 en Valencia';
+const description =
+  'Conoce la historia de Carretillas Tekon, empresa familiar fundada en 1989 en Sueca, Valencia. Más de 35 años de experiencia en venta, alquiler y reparación de carretillas elevadoras.';
+const jsonLd = [localBusinessJsonLd];
+
+const values = [
+  {
+    number: '01',
+    title: 'Experiencia',
+    description:
+      'Nuestra larga trayectoria de más de tres décadas es testimonio de la confianza que nuestros clientes depositan en la calidad de nuestros productos y servicios.',
+    icon: '🏆',
+  },
+  {
+    number: '02',
+    title: 'Compromiso',
+    description:
+      'Todas nuestras carretillas son seleccionadas cuidadosamente de los mejores fabricantes como CESAB, asegurando un rendimiento superior y durabilidad excepcional.',
+    icon: '🤝',
+  },
+  {
+    number: '03',
+    title: 'Gama de Productos',
+    description:
+      'Ofrecemos una amplia variedad de carretillas adaptadas para satisfacer las diversas necesidades de nuestros clientes, desde transpaletas hasta carretillas retráctiles.',
+    icon: '📦',
+  },
+  {
+    number: '04',
+    title: 'Servicios de Alquiler',
+    description:
+      'Nuestra flota de carretillas bien mantenida y de última generación está disponible para alquiler a corto y largo plazo, brindando a nuestros clientes la flexibilidad necesaria para adaptarse a cambios estacionales o proyectos específicos.',
+    icon: '🏭',
+  },
+  {
+    number: '05',
+    title: 'Compromiso Ambiental',
+    description:
+      'Nuestras carretillas eléctricas están diseñadas para reducir las emisiones y minimizar el impacto ambiental, ayudando a nuestros clientes a avanzar hacia prácticas comerciales sostenibles.',
+    icon: '🌱',
+  },
+  {
+    number: '06',
+    title: 'Atención al Cliente',
+    description:
+      'Ofrecemos un servicio personalizado y profesional, asegurando que cada cliente experimente un soporte completo desde la selección del equipo hasta la asistencia postventa.',
+    icon: '⭐',
+  },
+];
+---
+
+<Layout title={title} description={description} jsonLd={jsonLd}>
+  {/* Page Header */}
+  <section
+    class="bg-gradient-to-br from-primary/10 via-background to-background py-16 md:py-24"
+    aria-labelledby="about-heading"
+    data-testid="about-hero"
+  >
+    <div class="container mx-auto px-4">
+      <div class="max-w-3xl">
+        <p class="text-sm font-semibold text-primary uppercase tracking-wider mb-3">
+          Desde 1989 en Valencia
+        </p>
+        <h1
+          id="about-heading"
+          class="text-4xl md:text-5xl font-bold text-foreground leading-tight mb-6"
+        >
+          Sobre Carretillas Tekon
+        </h1>
+        <p class="text-lg text-muted-foreground max-w-2xl">
+          Una empresa familiar con más de 35 años de experiencia en venta, alquiler y reparación de
+          carretillas elevadoras en Valencia y provincia.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  {/* Company History */}
+  <section
+    class="py-16 bg-background"
+    aria-labelledby="history-heading"
+    data-testid="about-history"
+  >
+    <div class="container mx-auto px-4">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center max-w-5xl mx-auto">
+        <div>
+          <h2
+            id="history-heading"
+            class="text-2xl md:text-3xl font-bold text-foreground mb-6"
+            data-testid="history-heading"
+          >
+            Nuestra Historia
+          </h2>
+          <div class="space-y-4 text-muted-foreground leading-relaxed">
+            <p>
+              Carretillas Tekon fue fundada en <strong class="text-foreground">1989</strong> en Sueca,
+              Valencia, con la misión de ofrecer soluciones integrales para la manutención industrial
+              en la región.
+            </p>
+            <p>
+              Durante más de tres décadas, hemos crecido de la mano de nuestros clientes,
+              especializándonos en venta y alquiler de carretillas retráctiles, carretillas
+              eléctricas, carretillas térmicas, transpaletas eléctricas y manuales, y soluciones de
+              remolque.
+            </p>
+            <p>
+              Hoy en día, contamos con un equipo de profesionales altamente cualificados que ofrecen
+              a nuestros clientes las herramientas necesarias para optimizar sus operaciones y
+              maximizar la eficiencia logística.
+            </p>
+          </div>
+        </div>
+        <div
+          class="rounded-xl border border-border bg-muted/30 p-8 text-center"
+          data-testid="history-stats"
+        >
+          <div class="grid grid-cols-2 gap-8">
+            <div>
+              <p class="text-4xl font-bold text-primary" data-testid="stat-founded">1989</p>
+              <p class="text-sm text-muted-foreground mt-1">Año de fundación</p>
+            </div>
+            <div>
+              <p class="text-4xl font-bold text-primary" data-testid="stat-years">+35</p>
+              <p class="text-sm text-muted-foreground mt-1">Años de experiencia</p>
+            </div>
+            <div>
+              <p class="text-4xl font-bold text-primary">Valencia</p>
+              <p class="text-sm text-muted-foreground mt-1">Provincia de servicio</p>
+            </div>
+            <div>
+              <p class="text-4xl font-bold text-primary">Sueca</p>
+              <p class="text-sm text-muted-foreground mt-1">Sede central</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {/* Company Values */}
+  <section
+    class="py-16 bg-muted/30"
+    aria-labelledby="values-heading"
+    data-testid="about-values"
+  >
+    <div class="container mx-auto px-4">
+      <div class="text-center mb-12">
+        <h2
+          id="values-heading"
+          class="text-2xl md:text-3xl font-bold text-foreground mb-4"
+          data-testid="values-heading"
+        >
+          Nuestros Principios
+        </h2>
+        <p class="text-muted-foreground max-w-2xl mx-auto">
+          Los valores que guían nuestro trabajo cada día y que nos han permitido construir relaciones
+          de confianza con nuestros clientes durante más de 35 años.
+        </p>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-5xl mx-auto">
+        {
+          values.map((value) => (
+            <div
+              class="rounded-xl border border-border bg-card p-6"
+              data-testid={`value-card-${value.number}`}
+            >
+              <div class="flex items-start gap-4">
+                <div>
+                  <p class="text-xs font-bold text-primary uppercase tracking-widest mb-1">
+                    {value.number}
+                  </p>
+                  <div class="text-3xl mb-3" aria-hidden="true">
+                    {value.icon}
+                  </div>
+                </div>
+              </div>
+              <h3 class="text-lg font-semibold text-foreground mb-3">{value.title}</h3>
+              <p class="text-sm text-muted-foreground leading-relaxed">{value.description}</p>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  {/* Team / Specializations */}
+  <section
+    class="py-16 bg-background"
+    aria-labelledby="specializations-heading"
+    data-testid="about-specializations"
+  >
+    <div class="container mx-auto px-4">
+      <div class="max-w-3xl mx-auto text-center">
+        <h2
+          id="specializations-heading"
+          class="text-2xl md:text-3xl font-bold text-foreground mb-6"
+          data-testid="specializations-heading"
+        >
+          Especializados en Carretillas Elevadoras
+        </h2>
+        <p class="text-muted-foreground mb-8 leading-relaxed">
+          Somos especialistas en venta y alquiler de carretillas retráctiles, carretillas
+          eléctricas, carretillas térmicas, soluciones de remolque, transpaletas eléctricas y
+          transpaletas manuales, ofreciendo a nuestros clientes las herramientas necesarias para
+          optimizar sus operaciones y maximizar la eficiencia logística.
+        </p>
+        <div class="flex flex-wrap gap-3 justify-center" data-testid="specialization-tags">
+          {
+            [
+              'Carretillas Retráctiles',
+              'Carretillas Eléctricas',
+              'Carretillas Térmicas',
+              'Transpaletas Eléctricas',
+              'Transpaletas Manuales',
+              'Soluciones de Remolque',
+            ].map((spec) => (
+              <span class="inline-flex items-center rounded-full bg-primary/10 px-4 py-2 text-sm font-medium text-primary">
+                {spec}
+              </span>
+            ))
+          }
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {/* CTA Section */}
+  <section
+    class="py-16 bg-primary/5 border-t border-primary/10"
+    aria-labelledby="about-cta-heading"
+    data-testid="about-cta"
+  >
+    <div class="container mx-auto px-4 text-center">
+      <h2 id="about-cta-heading" class="text-2xl md:text-3xl font-bold mb-4">
+        ¿Quieres trabajar con nosotros?
+      </h2>
+      <p class="text-muted-foreground max-w-2xl mx-auto mb-8">
+        Más de 35 años de experiencia avalan nuestros servicios. Contacta con Carretillas Tekon para
+        recibir asesoramiento personalizado sobre tu flota de carretillas.
+      </p>
+      <div class="flex flex-col sm:flex-row gap-4 justify-center">
+        <a
+          href="/contacto"
+          class="inline-flex items-center justify-center rounded-md bg-primary text-primary-foreground hover:bg-primary/90 h-11 px-8 text-base font-semibold transition-colors"
+          data-testid="cta-contact-link"
+        >
+          Contactar ahora
+        </a>
+        <a
+          href="/nuestras-soluciones"
+          class="inline-flex items-center justify-center rounded-md border border-input bg-background hover:bg-accent hover:text-accent-foreground h-11 px-8 text-base font-semibold transition-colors"
+          data-testid="cta-solutions-link"
+        >
+          Ver nuestras soluciones
+        </a>
+      </div>
+    </div>
+  </section>
+</Layout>
