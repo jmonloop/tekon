@@ -57,7 +57,7 @@ function SearchResultItem({ result }: { result: SearchResult }) {
       }}
     >
       <img
-        src={result.image_url ?? '/placeholder-forklift.webp'}
+        src={result.image_url ?? '/images/forklift-placeholder.webp'}
         alt={result.name}
         className="h-12 w-12 rounded object-cover shrink-0"
         width={48}
