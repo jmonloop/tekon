@@ -97,7 +97,7 @@ export function InquiriesTable() {
   };
 
   return (
-    <div data-testid="admin-consultas" className="p-8 space-y-6">
+    <div data-testid="admin-consultas" className="p-4 md:p-8 space-y-6">
       <h1 className="text-2xl font-bold">Consultas</h1>
 
       {error && (
@@ -224,7 +224,7 @@ export function InquiriesTable() {
                           </span>
                         </div>
 
-                        <div className="flex items-center gap-3 shrink-0">
+                        <div className="flex items-center gap-2 shrink-0 flex-wrap justify-end">
                           {inq.forklift ? (
                             <Link
                               data-testid={`inquiry-forklift-link-${inq.id}`}
@@ -245,7 +245,7 @@ export function InquiriesTable() {
 
                           <span
                             data-testid={`inquiry-date-${inq.id}`}
-                            className="text-sm text-muted-foreground"
+                            className="hidden sm:inline text-sm text-muted-foreground"
                           >
                             {formatDate(inq.created_at)}
                           </span>

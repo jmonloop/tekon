@@ -88,7 +88,11 @@ export function Dashboard() {
           unreadInquiries: unreadRes.count ?? 0,
         });
       } catch (err) {
-        setError(err instanceof Error ? err.message : 'Error al cargar el dashboard');
+        const message =
+          err instanceof Error ? err.message :
+          typeof err === 'object' && err !== null && 'message' in err ? String((err as { message: unknown }).message) :
+          'Error al cargar el dashboard';
+        setError(message);
       } finally {
         setLoading(false);
       }
@@ -98,7 +102,7 @@ export function Dashboard() {
   }, []);
 
   return (
-    <div data-testid="admin-dashboard" className="p-8 space-y-8">
+    <div data-testid="admin-dashboard" className="p-4 md:p-8 space-y-8">
       <div>
         <h1 className="text-2xl font-bold">Dashboard</h1>
         <p className="text-muted-foreground mt-1">Bienvenido al panel de administración de Tekon.</p>

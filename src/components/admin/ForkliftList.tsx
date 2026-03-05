@@ -100,8 +100,8 @@ export function ForkliftList() {
   });
 
   return (
-    <div data-testid="admin-carretillas" className="p-8 space-y-6">
-      <div className="flex items-center justify-between">
+    <div data-testid="admin-carretillas" className="p-4 md:p-8 space-y-6">
+      <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         <h1 className="text-2xl font-bold">Carretillas</h1>
         <Button
           data-testid="nueva-carretilla-btn"
@@ -124,7 +124,7 @@ export function ForkliftList() {
         </div>
       )}
 
-      <div className="flex gap-3">
+      <div className="flex flex-col gap-3 sm:flex-row">
         <Input
           data-testid="search-input"
           placeholder="Buscar carretillas..."
@@ -177,6 +177,7 @@ export function ForkliftList() {
                     : 'Crea la primera.'}
                 </div>
               ) : (
+                <div className="overflow-x-auto">
                 <table className="w-full text-sm">
                   <thead>
                     <tr className="border-b bg-muted/50">
@@ -279,6 +280,7 @@ export function ForkliftList() {
                     ))}
                   </tbody>
                 </table>
+                </div>
               )}
             </div>
           )}
