@@ -3,7 +3,6 @@ export interface Category {
   name: string;
   slug: string;
   sort_order: number;
-  created_at: string;
 }
 
 export interface Forklift {

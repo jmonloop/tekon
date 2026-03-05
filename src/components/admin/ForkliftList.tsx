@@ -30,7 +30,7 @@ export function ForkliftList() {
     const [forkliftRes, categoryRes] = await Promise.all([
       supabase
         .from('forklifts')
-        .select('*, category:categories(id, name, slug, sort_order, created_at)')
+        .select('*, category:categories(id, name, slug, sort_order)')
         .order('created_at', { ascending: false }),
       supabase.from('categories').select('*').order('sort_order', { ascending: true }),
     ]);
