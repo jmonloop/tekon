@@ -108,8 +108,8 @@ export function SpecsEditor({ specRows, specNameSuggestions, onChange }: SpecsEd
       </datalist>
 
       {visibleRows.length > 0 ? (
-        <div className="rounded-md border">
-          <table className="w-full text-sm">
+        <div className="overflow-x-auto rounded-md border">
+          <table className="w-full min-w-[480px] text-sm">
             <thead>
               <tr className="border-b bg-muted/50">
                 <th className="w-8 px-2 py-2" />
