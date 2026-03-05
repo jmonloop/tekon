@@ -167,12 +167,12 @@ describe('SearchBar — search form', () => {
     expect($searchQuery.get()).toBe('toyota');
   });
 
-  it('does not show dropdown for queries shorter than 2 characters', async () => {
+  it('does not show dropdown for empty queries', async () => {
     renderSearchBar();
     fireEvent.click(screen.getByTestId('search-trigger'));
     await waitFor(() => expect(screen.getByTestId('search-input')).toBeDefined());
 
-    fireEvent.change(screen.getByTestId('search-input'), { target: { value: 't' } });
+    fireEvent.change(screen.getByTestId('search-input'), { target: { value: '' } });
 
     await waitFor(() => {
       expect(screen.queryByTestId('search-dropdown')).toBeNull();

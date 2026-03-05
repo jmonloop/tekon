@@ -141,7 +141,7 @@ export function SearchBar() {
     abortRef.current?.abort();
     abortRef.current = new AbortController();
 
-    if (value.trim().length < 2) {
+    if (value.trim().length < 1) {
       $searchResults.set([]);
       setIsLoading(false);
       setHasSearched(false);
@@ -229,7 +229,7 @@ export function SearchBar() {
     }
   }, [isOpen]);
 
-  const showDropdown = isOpen && query.trim().length >= 2;
+  const showDropdown = isOpen && query.trim().length >= 1;
 
   return (
     <div ref={containerRef} className="relative" data-testid="search-bar">
