@@ -23,7 +23,7 @@ const SAMPLE_INQUIRIES = [
     email: 'juan@example.com',
     message: 'Estoy interesado en el modelo S100. ¿Podría enviarme más información?',
     forklift_id: 'fork-1',
-    is_read: false,
+    read: false,
     created_at: '2026-03-04T10:00:00Z',
     forklift: { id: 'fork-1', name: 'Toyota 8FBE15', slug: 'toyota-8fbe15' },
   },
@@ -33,7 +33,7 @@ const SAMPLE_INQUIRIES = [
     email: 'maria@example.com',
     message: 'Consulta general sobre alquiler de carretillas.',
     forklift_id: null,
-    is_read: true,
+    read: true,
     created_at: '2026-03-03T09:00:00Z',
     forklift: null,
   },
@@ -43,7 +43,7 @@ const SAMPLE_INQUIRIES = [
     email: 'carlos@example.com',
     message: 'Necesito información sobre mantenimiento.',
     forklift_id: null,
-    is_read: false,
+    read: false,
     created_at: '2026-03-02T08:00:00Z',
     forklift: null,
   },
@@ -254,7 +254,7 @@ describe('InquiriesTable — filter tabs', () => {
   });
 
   it('shows empty state when tab has no matching inquiries', async () => {
-    stubInitialFetch([{ ...SAMPLE_INQUIRIES[0], is_read: false }]);
+    stubInitialFetch([{ ...SAMPLE_INQUIRIES[0], read: false }]);
     renderInquiriesTable();
 
     await waitFor(() => expect(screen.getByTestId('inquiry-row-inq-1')).toBeDefined());

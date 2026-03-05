@@ -75,7 +75,7 @@ export function Dashboard() {
         const [totalRes, publishedRes, unreadRes] = await Promise.all([
           supabase.from('forklifts').select('*', { count: 'exact', head: true }),
           supabase.from('forklifts').select('*', { count: 'exact', head: true }).eq('is_published', true),
-          supabase.from('inquiries').select('*', { count: 'exact', head: true }).eq('is_read', false),
+          supabase.from('inquiries').select('*', { count: 'exact', head: true }).eq('read', false),
         ]);
 
         if (totalRes.error) throw totalRes.error;

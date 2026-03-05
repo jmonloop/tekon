@@ -21,8 +21,8 @@ export function InquiriesTable() {
 
   const [optimisticInquiries, setOptimisticRead] = useOptimistic(
     inquiries,
-    (state, { id, is_read }: { id: string; is_read: boolean }) =>
-      state.map((inq) => (inq.id === id ? { ...inq, is_read } : inq)),
+    (state, { id, read }: { id: string; read: boolean }) =>
+      state.map((inq) => (inq.id === id ? { ...inq, read } : inq)),
   );
 
   const fetchInquiries = async () => {
@@ -44,19 +44,19 @@ export function InquiriesTable() {
   }, []);
 
   const handleToggleRead = (inquiry: Inquiry) => {
-    const newValue = !inquiry.is_read;
+    const newValue = !inquiry.read;
     startTransition(async () => {
-      setOptimisticRead({ id: inquiry.id, is_read: newValue });
+      setOptimisticRead({ id: inquiry.id, read: newValue });
       const { error: updateError } = await supabase
         .from('inquiries')
-        .update({ is_read: newValue })
+        .update({ read: newValue })
         .eq('id', inquiry.id);
 
       if (updateError) {
         setError(updateError.message);
       } else {
         setInquiries((prev) =>
-          prev.map((inq) => (inq.id === inquiry.id ? { ...inq, is_read: newValue } : inq)),
+          prev.map((inq) => (inq.id === inquiry.id ? { ...inq, read: newValue } : inq)),
         );
       }
     });
@@ -81,12 +81,12 @@ export function InquiriesTable() {
   };
 
   const filtered = optimisticInquiries.filter((inq) => {
-    if (activeTab === 'unread') return !inq.is_read;
-    if (activeTab === 'read') return inq.is_read;
+    if (activeTab === 'unread') return !inq.read;
+    if (activeTab === 'read') return inq.read;
     return true;
   });
 
-  const unreadCount = optimisticInquiries.filter((inq) => !inq.is_read).length;
+  const unreadCount = optimisticInquiries.filter((inq) => !inq.read).length;
 
   const formatDate = (dateStr: string) => {
     return new Date(dateStr).toLocaleDateString('es-ES', {
@@ -174,7 +174,7 @@ export function InquiriesTable() {
                     <div
                       key={inq.id}
                       data-testid={`inquiry-row-${inq.id}`}
-                      className={`transition-colors ${!inq.is_read ? 'border-l-4 border-l-primary bg-primary/5' : ''}`}
+                      className={`transition-colors ${!inq.read ? 'border-l-4 border-l-primary bg-primary/5' : ''}`}
                     >
                       {/* Row header */}
                       <div
@@ -199,7 +199,7 @@ export function InquiriesTable() {
                           )}
                         </button>
 
-                        {!inq.is_read && (
+                        {!inq.read && (
                           <span
                             data-testid={`unread-badge-${inq.id}`}
                             className="inline-flex items-center rounded-full bg-primary px-2 py-0.5 text-xs font-medium text-primary-foreground"
@@ -211,7 +211,7 @@ export function InquiriesTable() {
                         <div className="flex-1 min-w-0">
                           <span
                             data-testid={`inquiry-name-${inq.id}`}
-                            className={`text-sm ${!inq.is_read ? 'font-semibold' : 'font-medium'}`}
+                            className={`text-sm ${!inq.read ? 'font-semibold' : 'font-medium'}`}
                           >
                             {inq.name}
                           </span>
@@ -258,9 +258,9 @@ export function InquiriesTable() {
                               e.stopPropagation();
                               handleToggleRead(inq);
                             }}
-                            title={inq.is_read ? 'Marcar como no leído' : 'Marcar como leído'}
+                            title={inq.read ? 'Marcar como no leído' : 'Marcar como leído'}
                           >
-                            {inq.is_read ? (
+                            {inq.read ? (
                               <Mail className="size-4" />
                             ) : (
                               <MailOpen className="size-4" />

@@ -103,7 +103,7 @@ const INQUIRY = {
   email: 'juan@example.com',
   message: 'Estoy interesado en este modelo.',
   forklift_id: 'fork-1',
-  is_read: false,
+  read: false,
   created_at: '2024-01-10',
 };
 
@@ -732,7 +732,7 @@ describe('Flow 6 — Email notification / deploy hook contract', () => {
         email: INQUIRY.email,
         message: INQUIRY.message,
         forklift_id: INQUIRY.forklift_id,
-        is_read: false,
+        read: false,
         created_at: INQUIRY.created_at,
       },
       old_record: null,

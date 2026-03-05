@@ -38,7 +38,7 @@ export interface Inquiry {
   email: string;
   message: string;
   forklift_id: string | null;
-  is_read: boolean;
+  read: boolean;
   created_at: string;
   forklift?: Pick<Forklift, 'id' | 'name' | 'slug'>;
 }
