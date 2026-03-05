@@ -4,6 +4,16 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { cn } from '@/lib/utils';
 
+function generateId(): string {
+  const bytes = new Uint8Array(16);
+  crypto.getRandomValues(bytes);
+  bytes[6] = (bytes[6] & 0x0f) | 0x40;
+  bytes[8] = (bytes[8] & 0x3f) | 0x80;
+  return [...bytes]
+    .map((b, i) => ([3, 5, 7, 9].includes(i) ? '-' : '') + b.toString(16).padStart(2, '0'))
+    .join('');
+}
+
 export interface SpecRow {
   id: string;
   spec_name: string;
@@ -28,7 +38,7 @@ export function SpecsEditor({ specRows, specNameSuggestions, onChange }: SpecsEd
 
   const addRow = () => {
     const newRow: SpecRow = {
-      id: crypto.randomUUID(),
+      id: generateId(),
       spec_name: '',
       spec_value: '',
       spec_unit: '',
