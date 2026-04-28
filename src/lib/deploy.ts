@@ -1,12 +1,9 @@
-/**
- * Triggers a Vercel deploy hook to rebuild the static site.
- * Returns true on success, false otherwise.
- */
+/** Triggers the site build hook (Netlify/Vercel) to rebuild the static site. */
 export async function triggerDeploy(): Promise<boolean> {
-  const hookUrl = import.meta.env.PUBLIC_VERCEL_DEPLOY_HOOK_URL as string | undefined;
+  const hookUrl = import.meta.env.PUBLIC_BUILD_HOOK_URL as string | undefined;
 
   if (!hookUrl) {
-    console.warn('PUBLIC_VERCEL_DEPLOY_HOOK_URL is not configured');
+    console.warn('PUBLIC_BUILD_HOOK_URL is not configured');
     return false;
   }
 
