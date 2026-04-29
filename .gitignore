@@ -34,3 +34,6 @@ pnpm-debug.log*
 
 # Local Netlify folder
 .netlify
+
+# Legacy PDFs — now hosted in Supabase forklift-catalogs bucket
+public/pdfs/
