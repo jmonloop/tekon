@@ -37,3 +37,8 @@ pnpm-debug.log*
 
 # Legacy PDFs — now hosted in Supabase forklift-catalogs bucket
 public/pdfs/
+
+# Claude local secrets
+.claude/*.local.json
+.claude/*.local.yaml
+.claude/*.local.env
